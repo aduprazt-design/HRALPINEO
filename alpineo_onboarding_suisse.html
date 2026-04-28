@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpineo — Onboarding Suisse : Guide RH Complet</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --ink: #1C1C1C;
+  --ink2: #5A5A5A;
+  --ink3: #9A9A9A;
+  --red: #C0392B;
+  --orange: #D35400;
+  --green: #1A7A55;
+  --blue: #1A4A7A;
+  --gold: #B8860B;
+  --border: rgba(0,0,0,0.09);
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,245,240,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 15px;
+  white-space: nowrap;
+  padding: 14px 20px 14px 0;
+  border-right: 0.5px solid var(--border);
+  margin-right: 16px;
+  color: var(--ink);
+}
+.nav-tab {
+  padding: 14px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink3);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.nav-tab:hover { color: var(--ink); }
+.nav-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ── LAYOUT ── */
+.page { display: none; padding: 2.5rem 2rem 4rem; max-width: 1000px; margin: 0 auto; }
+.page.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; line-height: 1.2; margin-bottom: 10px; }
+.hero p { font-size: 13.5px; color: rgba(255,255,255,0.65); max-width: 620px; }
+
+/* ── SECTION ── */
+.section-title {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink3); margin: 2rem 0 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+/* ── CASE CARDS ── */
+.cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+.case-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.case-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.case-card.selected { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.case-flag { font-size: 22px; margin-bottom: 8px; }
+.case-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.case-sub { font-size: 12px; color: var(--ink2); }
+.case-badge {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 20px;
+}
+.badge-green { background: #e6f4ee; color: var(--green); }
+.badge-orange { background: #fdf0e6; color: var(--orange); }
+.badge-red { background: #fdf0f0; color: var(--red); }
+.badge-blue { background: #e6edf8; color: var(--blue); }
+
+/* ── DETAIL PANEL ── */
+.detail-panel {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: none;
+}
+.detail-panel.visible { display: block; }
+.detail-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  display: flex; align-items: center; gap: 16px;
+}
+.detail-header .flag { font-size: 32px; }
+.detail-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; }
+.detail-header .sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.detail-body { padding: 2rem; }
+
+/* ── STEPS ── */
+.phase {
+  margin-bottom: 2rem;
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.phase-header {
+  background: #fafaf8;
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 0.5px solid var(--border);
+}
+.phase-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.phase-title { font-weight: 600; font-size: 13.5px; }
+.phase-tag { margin-left: auto; font-size: 11px; color: var(--ink3); font-weight: 500; }
+.phase-body { padding: 16px; }
+
+.step {
+  display: grid; grid-template-columns: 20px 1fr; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.step:last-child { border-bottom: none; padding-bottom: 0; }
+.step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink3); margin-top: 7px; }
+.step-content {}
+.step-title { font-weight: 500; font-size: 13.5px; }
+.step-desc { font-size: 12.5px; color: var(--ink2); margin-top: 3px; }
+.step-who {
+  display: inline-block; margin-top: 6px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 4px;
+}
+.who-rh { background: #e6edf8; color: var(--blue); }
+.who-sal { background: #e6f4ee; color: var(--green); }
+.who-fid { background: #fdf5e6; color: var(--gold); }
+.who-fer { background: #fdf0f0; color: var(--red); }
+
+/* ── RISK BOX ── */
+.risk-box {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 1rem 0;
+  display: flex; gap: 12px;
+}
+.risk-box.red { background: #fdf0f0; border: 0.5px solid #f5c6c0; }
+.risk-box.orange { background: #fdf5e6; border: 0.5px solid #f5d9a0; }
+.risk-box.green { background: #e6f4ee; border: 0.5px solid #a0d9be; }
+.risk-box .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.risk-box-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.risk-box p { font-size: 12.5px; color: var(--ink2); }
+
+/* ── DOCS TABLE ── */
+.docs-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0; }
+.docs-table th {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink3); padding: 8px 10px; border-bottom: 0.5px solid var(--border);
+  text-align: left; background: #fafaf8;
+}
+.docs-table td { padding: 10px 10px; border-bottom: 0.5px solid var(--border); vertical-align: top; }
+.docs-table tr:last-child td { border-bottom: none; }
+.docs-table .doc-name { font-weight: 500; }
+.docs-table .doc-who { font-size: 11.5px; color: var(--ink2); }
+
+/* ── CHECK BOX ── */
+.checklist { list-style: none; margin: 0.5rem 0; }
+.checklist li {
+  padding: 7px 0 7px 28px;
+  position: relative;
+  font-size: 13px;
+  border-bottom: 0.5px solid var(--border);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before {
+  content: '□';
+  position: absolute; left: 4px;
+  color: var(--ink3); font-size: 15px; line-height: 1.3;
+}
+.checklist li strong { font-weight: 500; }
+
+/* ── INFO CARD ── */
+.info-card {
+  background: #f0f4fa;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 0.75rem 0;
+  font-size: 13px;
+  border-left: 3px solid var(--blue);
+}
+.info-card strong { display: block; font-weight: 600; margin-bottom: 4px; color: var(--blue); }
+
+/* ── MATRIX ── */
+.matrix { overflow-x: auto; margin: 1rem 0; }
+.matrix table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 600px; }
+.matrix th {
+  background: var(--ink); color: #fff;
+  padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  text-align: left;
+}
+.matrix td { padding: 10px 12px; border-bottom: 0.5px solid var(--border); vertical-align: top; }
+.matrix tr:nth-child(even) td { background: #fafaf8; }
+.matrix .y { color: var(--green); font-weight: 600; }
+.matrix .n { color: var(--ink3); }
+.matrix .cond { color: var(--orange); font-weight: 500; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 24px; margin: 1rem 0; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 1.25rem; }
+.tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); border: 2px solid var(--bg); }
+.tl-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); margin-bottom: 4px; }
+.tl-title { font-weight: 500; font-size: 13.5px; margin-bottom: 4px; }
+.tl-desc { font-size: 12.5px; color: var(--ink2); }
+
+/* ── ACCORDION ── */
+.accordion { margin: 0.5rem 0; }
+.acc-item { border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.acc-header {
+  padding: 12px 16px; font-weight: 500; font-size: 13.5px;
+  cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface);
+}
+.acc-header:hover { background: #fafaf8; }
+.acc-arrow { transition: transform 0.2s; font-size: 12px; color: var(--ink3); }
+.acc-item.open .acc-arrow { transform: rotate(90deg); }
+.acc-body { padding: 0 16px 14px; display: none; }
+.acc-item.open .acc-body { display: block; }
+
+/* ── QUICK CHECK ── */
+.quick-check {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.quick-check h3 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; margin-bottom: 12px; }
+.quick-check ul { list-style: none; }
+.quick-check li { padding: 6px 0; font-size: 13px; color: rgba(255,255,255,0.8); border-bottom: 0.5px solid rgba(255,255,255,0.08); display: flex; gap: 10px; }
+.quick-check li:last-child { border-bottom: none; }
+.quick-check li::before { content: '→'; color: rgba(255,255,255,0.35); flex-shrink: 0; }
+
+/* ── TABS WITHIN PAGE ── */
+.inner-tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.inner-tab {
+  padding: 7px 14px; font-size: 12.5px; font-weight: 500;
+  border-radius: 8px; cursor: pointer;
+  border: 0.5px solid var(--border);
+  background: var(--surface); color: var(--ink2);
+  transition: all 0.15s;
+}
+.inner-tab:hover { background: #f0f0ec; }
+.inner-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.inner-content { display: none; }
+.inner-content.active { display: block; }
+
+/* ── TAG ── */
+.tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 4px; margin: 2px;
+}
+.tag-rh { background: #e6edf8; color: var(--blue); }
+.tag-fid { background: #fdf5e6; color: var(--gold); }
+.tag-sal { background: #e6f4ee; color: var(--green); }
+.tag-fer { background: #fdf0f0; color: var(--red); }
+.tag-auto { background: #f0e6f4; color: #6a1a7a; }
+
+.mt1 { margin-top: 0.75rem; }
+.mt2 { margin-top: 1.5rem; }
+.small { font-size: 12px; color: var(--ink3); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">🇨🇭 Alpineo — Onboarding Suisse</div>
+  <button class="nav-tab active" onclick="showPage('accueil',event)">Vue d'ensemble</button>
+  <button class="nav-tab" onclick="showPage('cas',event)">Cas par profil</button>
+  <button class="nav-tab" onclick="showPage('imposition',event)">Imposition à la source</button>
+  <button class="nav-tab" onclick="showPage('docs',event)">Documents & formulaires</button>
+  <button class="nav-tab" onclick="showPage('declarations',event)">Déclarations FER / AVS</button>
+  <button class="nav-tab" onclick="showPage('paie',event)">Paie & fiduciaire</button>
+  <button class="nav-tab" onclick="showPage('cantons',event)">Par canton</button>
+  <button class="nav-tab" onclick="showPage('situations',event)">Situations familiales</button>
+  <button class="nav-tab" onclick="showPage('af',event)">Allocations familiales</button>
+
+<!-- ══════════════ PAGE : ACCUEIL ══════════════ -->
+<div id="page-accueil" class="page active">
+  <div class="hero">
+    <div class="hero-label">Alpineo Consulting — Guide RH Suisse</div>
+    <h1>Processus d'onboarding complet<br>pour tout nouveau salarié en Suisse</h1>
+    <p>Ce guide couvre l'intégralité du processus d'entrée : imposition, permis, déclarations sociales, FER/AVS, fiduciaire — pour chaque profil de salarié.</p>
+  </div>
+
+  <div class="section-title">Les 6 profils couverts</div>
+  <div class="cases-grid">
+    <div class="case-card" onclick="goToCase('suisse')">
+      <div class="case-flag">🇨🇭</div>
+      <div class="case-title">Résident suisse</div>
+      <div class="case-sub">Nationalité CH ou permis C — domicile en Suisse</div>
+      <div class="case-badge badge-green">Simple</div>
+    </div>
+    <div class="case-card" onclick="goToCase('frontalier-fr')">
+      <div class="case-flag">🇫🇷</div>
+      <div class="case-title">Frontalier France</div>
+      <div class="case-sub">Permis G — réside en France, travaille en Suisse</div>
+      <div class="case-badge badge-orange">Attention IS</div>
+    </div>
+    <div class="case-card" onclick="goToCase('frontalier-de')">
+      <div class="case-flag">🇩🇪</div>
+      <div class="case-title">Frontalier Allemagne</div>
+      <div class="case-sub">Permis G — réside en Allemagne</div>
+      <div class="case-badge badge-orange">IS limité</div>
+    </div>
+    <div class="case-card" onclick="goToCase('frontalier-it')">
+      <div class="case-flag">🇮🇹</div>
+      <div class="case-title">Frontalier Italie</div>
+      <div class="case-sub">Permis G — réside en Italie (zones limitrophes)</div>
+      <div class="case-badge badge-blue">Nouveau régime 2024</div>
+    </div>
+    <div class="case-card" onclick="goToCase('ue')">
+      <div class="case-flag">🇪🇺</div>
+      <div class="case-title">Ressortissant UE/AELE</div>
+      <div class="case-sub">Nationalité EU — s'installe en Suisse (permis B/L)</div>
+      <div class="case-badge badge-orange">Modéré</div>
+    </div>
+    <div class="case-card" onclick="goToCase('hors-ue')">
+      <div class="case-flag">🌍</div>
+      <div class="case-title">Ressortissant hors UE</div>
+      <div class="case-sub">Nationalité non-EU — quota cantonal, permis B</div>
+      <div class="case-badge badge-red">Complexe</div>
+    </div>
+  </div>
+
+  <div class="section-title">Matrice de synthèse</div>
+  <div class="matrix">
+    <table>
+      <thead><tr>
+        <th>Profil</th>
+        <th>Permis requis</th>
+        <th>Imposition source</th>
+        <th>AVS/AC Suisse</th>
+        <th>Déclar. canton</th>
+        <th>FER/AVS RH</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Résident suisse (Ch ou C)</strong></td>
+          <td class="n">Non</td>
+          <td class="n">Non ¹</td>
+          <td class="y">Oui</td>
+          <td class="n">Non</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>Résident CH avec permis B</strong></td>
+          <td class="y">Permis B</td>
+          <td class="y">Oui (IS)</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>Frontalier France (G)</strong></td>
+          <td class="y">Permis G</td>
+          <td class="cond">4,5% plafonné</td>
+          <td class="y">Oui</td>
+          <td class="y">Décl. canton GE/VD…</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>Frontalier Allemagne (G)</strong></td>
+          <td class="y">Permis G</td>
+          <td class="cond">Accord spécifique</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>Frontalier Italie (G)</strong></td>
+          <td class="y">Permis G</td>
+          <td class="cond">80/20 (accord 2024)</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>UE/AELE — Permis B</strong></td>
+          <td class="y">Permis B (autoannonce)</td>
+          <td class="y">Oui (IS)</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+        </tr>
+        <tr>
+          <td><strong>Hors UE — Permis B</strong></td>
+          <td class="y">Permis B (quota)</td>
+          <td class="y">Oui (IS)</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+          <td class="y">Oui</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">¹ Les nationaux suisses et permis C paient l'impôt ordinaire (taxation ordinaire) — pas d'IS à la source par l'employeur.</p>
+
+  <div class="section-title">Taux de cotisations sociales 2025</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Cotisation</th><th>Taux total</th><th>Part salarié</th><th>Part employeur</th><th>Base / plafond</th></tr></thead>
+      <tbody>
+        <tr><td><strong>AVS</strong> — Assurance vieillesse</td><td>8,7%</td><td>4,35%</td><td>4,35%</td><td>Illimité</td></tr>
+        <tr><td><strong>AI</strong> — Assurance invalidité</td><td>1,4%</td><td>0,7%</td><td>0,7%</td><td>Illimité</td></tr>
+        <tr><td><strong>APG</strong> — Allocations perte de gain</td><td>0,5%</td><td>0,25%</td><td>0,25%</td><td>Illimité</td></tr>
+        <tr><td><strong>AC</strong> — Assurance chômage tranche 1</td><td>2,2%</td><td>1,1%</td><td>1,1%</td><td>Jusqu'à CHF 148 200/an</td></tr>
+        <tr><td><strong>AC solidarité</strong> — tranche 2</td><td>1,0%</td><td>0,5%</td><td>0,5%</td><td>CHF 148 200 → 370 800/an</td></tr>
+        <tr><td><strong>LPP</strong> — Prévoyance professionnelle</td><td>Variable</td><td>≥ 50% part sal.</td><td>≥ 50% part emp.</td><td>Salaire coord. CHF 25 725–88 200/an</td></tr>
+        <tr><td><strong>LAA</strong> — Accidents professionnels</td><td>Variable</td><td>0%</td><td>100%</td><td>Max CHF 148 200/an</td></tr>
+        <tr><td><strong>AANP</strong> — Accidents non professionnels</td><td>Variable (~1,3%)</td><td>100%</td><td>0%</td><td>Max CHF 148 200/an</td></tr>
+        <tr><td><strong>IJM</strong> — Indemnité journalière maladie</td><td>Variable (~1,5–2,5%)</td><td>≤ 50%</td><td>≥ 50%</td><td>Selon assureur / CCT</td></tr>
+        <tr><td><strong>AF</strong> — Allocations familiales</td><td>~1–3%</td><td>0%</td><td>100%</td><td>Remboursé par caisse AF</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-card"><strong>💡 Seuil LPP 2025</strong>Entrée obligatoire LPP : salaire annuel ≥ CHF 22 050. Salaire de coordination : CHF 25 725. Salaire LPP coordonné max : CHF 88 200/an. En dessous du seuil d'entrée : affiliation volontaire possible — à informer le salarié.</div>
+
+  <div class="section-title">Chronologie type d'un onboarding</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">J-30 à J-15</div><div class="tl-title">Phase administrative pré-embauche</div><div class="tl-desc">Vérification permis, envoi contrat, collecte documents, démarches permis si besoin</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">J-5</div><div class="tl-title">Annonce à la caisse AVS / FER</div><div class="tl-desc">Déclaration d'entrée salarié à la caisse de compensation (FER ou ALPS selon le cas)</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">J Arrivée</div><div class="tl-title">Onboarding et remise documents</div><div class="tl-desc">Fiche de données fiscales, formulaire IS, questionnaire prévoyance</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">J+5</div><div class="tl-title">Transmission fiduciaire</div><div class="tl-desc">Envoi dossier complet fiduciaire pour paramétrage paie et taux IS</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Fin du mois M+1</div><div class="tl-title">1ère fiche de paie conforme</div><div class="tl-desc">IS correctement appliqué, cotisations sociales complètes</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">M+3 max</div><div class="tl-title">Affiliation LPP (caisse de pension)</div><div class="tl-desc">Si salaire annuel > seuil LPP (CHF 22 050 en 2024)</div></div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : CAS PAR PROFIL ══════════════ -->
+<div id="page-cas" class="page">
+  <div class="hero">
+    <div class="hero-label">Processus détaillé</div>
+    <h1>Guide par profil de salarié</h1>
+    <p>Sélectionnez un profil pour afficher le processus complet d'onboarding, les documents requis et les risques associés.</p>
+  </div>
+
+  <div class="cases-grid">
+    <div class="case-card" id="btn-suisse" onclick="showCase('suisse',event)">
+      <div class="case-flag">🇨🇭</div>
+      <div class="case-title">Résident suisse / Permis C</div>
+      <div class="case-sub">Nationalité CH ou permis établissement</div>
+      <div class="case-badge badge-green">Simple</div>
+    </div>
+    <div class="case-card" id="btn-frontalier-fr" onclick="showCase('frontalier-fr',event)">
+      <div class="case-flag">🇫🇷</div>
+      <div class="case-title">Frontalier France</div>
+      <div class="case-sub">Permis G — Accord franco-suisse</div>
+      <div class="case-badge badge-orange">Attention IS</div>
+    </div>
+    <div class="case-card" id="btn-frontalier-de" onclick="showCase('frontalier-de',event)">
+      <div class="case-flag">🇩🇪</div>
+      <div class="case-title">Frontalier Allemagne</div>
+      <div class="case-sub">Permis G — Accord CH-DE</div>
+      <div class="case-badge badge-orange">Accord spécifique</div>
+    </div>
+    <div class="case-card" id="btn-frontalier-it" onclick="showCase('frontalier-it',event)">
+      <div class="case-flag">🇮🇹</div>
+      <div class="case-title">Frontalier Italie</div>
+      <div class="case-sub">Permis G — Nouveau régime 2024</div>
+      <div class="case-badge badge-blue">Régime mixte</div>
+    </div>
+    <div class="case-card" id="btn-ue" onclick="showCase('ue',event)">
+      <div class="case-flag">🇪🇺</div>
+      <div class="case-title">Ressortissant UE/AELE</div>
+      <div class="case-sub">Permis B ou L — libre circulation</div>
+      <div class="case-badge badge-orange">Modéré</div>
+    </div>
+    <div class="case-card" id="btn-hors-ue" onclick="showCase('hors-ue',event)">
+      <div class="case-flag">🌍</div>
+      <div class="case-title">Hors UE / Extra-européen</div>
+      <div class="case-sub">Permis B — quota cantonal requis</div>
+      <div class="case-badge badge-red">Complexe</div>
+    </div>
+  </div>
+
+  <!-- DETAIL PANELS -->
+  <div id="detail-suisse" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🇨🇭</div>
+      <div><h2>Résident suisse / Permis C</h2><div class="sub">Nationalité CH, double national CH, ou permis d'établissement (C)</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="risk-box green"><div class="icon">✅</div><div><div class="risk-box-title">Profil le plus simple</div><p>Pas d'IS à la source, pas de démarches permis. Processus standard suisse applicable immédiatement.</p></div></div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Documents à collecter</div><div class="phase-tag">RH • J-10</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Copie pièce d'identité ou passeport</div><div class="step-desc">Pour le dossier employeur + caisse AVS</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Copie du permis C (si non-CH)</div><div class="step-desc">Scan recto-verso, vérifier date d'échéance</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Numéro AVS (13 chiffres)</div><div class="step-desc">Indispensable pour la déclaration caisse AVS et la paie</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Coordonnées bancaires suisses (IBAN)</div><div class="step-desc">Compte domicilié en Suisse</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Questionnaire prévoyance LPP</div><div class="step-desc">Situation familiale, bénéficiaires, 2e pilier précédent</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration état civil et enfants à charge</div><div class="step-desc">Impact sur les déductions AVS/IS (même si pas IS ici)</div><span class="step-who who-sal">Salarié</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Déclarations sociales RH</div><div class="phase-tag">RH • J à J+5</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration d'entrée à la caisse AVS/AC (FER ou ALPS)</div><div class="step-desc">Via le portail de la caisse — salaire annuel estimé, date d'entrée, numéro AVS</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Annonce à la caisse LPP (2e pilier)</div><div class="step-desc">Si salaire annuel ≥ CHF 22 050 — délai : dans les 30 jours suivant l'entrée</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Affiliation assurance accidents LAA</div><div class="step-desc">AAP (accidents professionnels) dès J1. AANP si ≥ 8h/sem.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Annonce allocation familiale (AF)</div><div class="step-desc">Si enfants — via la caisse AF cantonale ou la caisse employeur</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">3</div><div class="phase-title">Paramétrage paie & transmission fiduciaire</div><div class="phase-tag">RH + FID • J+5</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Envoi dossier complet à la fiduciaire</div><div class="step-desc">Contrat signé, données salarié, numéro AVS, coordonnées bancaires</div><span class="step-who who-rh">RH → FID</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Confirmation : pas d'IS à appliquer</div><div class="step-desc">Résident CH / permis C → taxation ordinaire → aucune retenue IS sur fiche de paie</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+        </div>
+      </div>
+
+      <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Point de vigilance LPP</div><p>Si salaire &lt; CHF 22 050/an : pas d'affiliation LPP obligatoire, mais informer le salarié de son droit à l'affiliation volontaire. À documenter dans le dossier.</p></div></div>
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Résident CH</h3><ul><li>Numéro AVS 13 chiffres bien reçu et vérifié</li><li>Déclaration caisse AVS faite avant ou le jour J1</li><li>Aucune case IS cochée dans la paie → à vérifier auprès de la fiduciaire</li></ul></div>
+    </div>
+  </div>
+
+  <div id="detail-frontalier-fr" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🇫🇷</div>
+      <div><h2>Frontalier France — Permis G</h2><div class="sub">Réside en France, travaille en Suisse — Accord bilatéral franco-suisse</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="risk-box red"><div class="icon">🔴</div><div><div class="risk-box-title">Cas le plus fréquent et le plus piégeux chez Alpineo</div><p>L'imposition à la source est plafonnée à 4,5% du salaire brut (convention franco-suisse). Mais attention : le télétravail en France peut remettre en cause le statut frontalier !</p></div></div>
+
+      <div class="info-card"><strong>Base légale clé</strong>Convention fiscale franco-suisse du 9 septembre 1966, modifiée. Article 17 : les salaires des frontaliers sont imposables dans le canton de travail suisse, avec un taux maximum de 4,5% reversé à la France via le mécanisme de compensation.</div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Vérification et obtention du permis G</div><div class="phase-tag">RH + Salarié • J-30</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Vérifier que le salarié a un domicile en France (zone frontalière)</div><div class="step-desc">Zones éligibles : départements 01 (Ain), 25 (Doubs), 39 (Jura), 68 (Haut-Rhin), 67 (Bas-Rhin), 57 (Moselle), 70 (Haute-Saône), 74 (Haute-Savoie), 90 (Belfort)</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Demande de permis G auprès du canton de travail</div><div class="step-desc">Pour les ressortissants UE : auto-annonce en ligne sur le portail du canton. Pour hors-UE : procédure spécifique (rare pour frontalier FR)</div><span class="step-who who-sal">Salarié + RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Formulaire de demande de permis G</div><div class="step-desc">À déposer auprès de l'Office cantonal de la population (ex : OCPM à Genève). Délai : 2-4 semaines. Permis valable 5 ans (UE).</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Documents à collecter</div><div class="phase-tag">Salarié • J-10</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Passeport ou CNI en cours de validité</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Justificatif de domicile français (< 3 mois)</div><div class="step-desc">EDF, quittance de loyer, avis de taxe foncière</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Copie permis G (dès obtention)</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Numéro AVS (si déjà travaillé en CH) ou attribution nouveau</div><div class="step-desc">Si 1er emploi suisse : la caisse AVS attribuera le numéro dès la déclaration d'entrée</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Formulaire IS — fiche de données fiscales</div><div class="step-desc">État civil, situation de famille, enfants à charge résidant en France → impacte le taux IS</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Attestation de non-affiliation française (si demandée par FER)</div><div class="step-desc">Pour confirmer que le salarié n'est pas affilié à la Sécu FR pour ce contrat</div><span class="step-who who-sal">Salarié</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">3</div><div class="phase-title">Imposition à la source — IS 4,5%</div><div class="phase-tag">RH + FID • J1</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déterminer le taux IS applicable</div><div class="step-desc">Barème cantonal × plafond 4,5% — la fiduciaire calcule le taux en fonction du salaire et de la situation familiale. Le taux est plafonné à 4,5% brut.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Paramétrer l'IS dans la paie</div><div class="step-desc">Code barème frontalier FR. Vérifier chaque année en janvier si recalcul nécessaire.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration annuelle IS au canton</div><div class="step-desc">L'employeur reverse l'IS au canton de travail chaque mois ou trimestre selon le canton. Déclaration annuelle de réconciliation en janvier N+1.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">4</div><div class="phase-title">Cotisations sociales suisses</div><div class="phase-tag">RH + FER • J1</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">AVS / AI / APG — obligatoires</div><div class="step-desc">Le frontalier FR est soumis aux cotisations sociales suisses (règlement CE 883/2004 — pays d'emploi). Taux 2024 : AVS 8,7% / AI 1,4% / APG 0,5% (partagés moitié-moitié)</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Assurance chômage AC</div><div class="step-desc">Taux 2024 : 2,2% jusqu'à CHF 148 200/an. 1% sur la part entre CHF 148 200 et CHF 370 800. Partagé employeur/salarié.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">LPP (2e pilier)</div><div class="step-desc">Obligatoire si salaire annuel ≥ CHF 22 050. Important : le frontalier FR cotise en CH mais peut demander le remboursement en capital à la retraite sous conditions.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">LAA — Assurance accidents</div><div class="step-desc">AAP obligatoire. AANP si travail ≥ 8h/sem.</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="risk-box red"><div class="icon">🚨</div><div><div class="risk-box-title">Risque critique : télétravail depuis la France</div><p>Si le salarié télétravaille depuis la France plus de 25% de son temps de travail, le statut frontalier peut être remis en cause et des cotisations sociales françaises (URSSAF) peuvent être dues par Alpineo. Accord bilatéral franco-suisse sur le télétravail : jusqu'à 40% du temps en remote autorisé depuis 2023 sans remise en cause du statut. Au-delà : risque de requalification en détachement inversé.</p></div></div>
+
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Frontalier France</h3><ul><li>Permis G reçu ET copié dans le dossier avant J1</li><li>Taux IS 4,5% max bien paramétré en paie</li><li>Accord télétravail signé : ≤ 40% depuis domicile FR documenté</li></ul></div>
+    </div>
+  </div>
+
+  <div id="detail-frontalier-de" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🇩🇪</div>
+      <div><h2>Frontalier Allemagne — Permis G</h2><div class="sub">Réside en Allemagne (Bade-Wurtemberg, Bavière principalement)</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="info-card"><strong>Base légale</strong>Convention fiscale CH-DE du 11 août 1971. Article 15a : les frontaliers sont imposés en Suisse à la source mais l'Allemagne perçoit 4,5% des salaires bruts via compensation interétatique. Zones frontalières : BW, Bavière (rayon 30 km de la frontière).</div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Permis G et documents</div><div class="phase-tag">RH + Salarié • J-20</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Vérifier domicile dans la zone frontalière allemande</div><div class="step-desc">Rayon 30 km de la frontière suisse — si hors zone, pas de statut frontalier → permis B requis</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Demande permis G (auto-annonce si UE)</div><div class="step-desc">Ressortissant allemand (UE) → auto-annonce au canton. Délai rapide.</div><span class="step-who who-sal">Salarié + RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Formulaire Grenzgänger (frontalier)</div><div class="step-desc">Attestation fournie par l'employeur suisse à remettre à l'administration fiscale allemande</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">IS et cotisations</div><div class="phase-tag">FID • J1</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">IS à la source avec barème frontalier DE</div><div class="step-desc">Taux réduit — reversement de 4,5% à l'Allemagne. Le salarié reçoit en Allemagne un crédit d'impôt. Obligation de déclaration annuelle côté salarié en Allemagne.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Cotisations sociales suisses (AVS, AC, LPP, LAA)</div><div class="step-desc">Mêmes règles que frontalier FR — pays d'emploi suisse compétent</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Attention : Attestation Grenzgänger annuelle</div><p>L'employeur doit fournir au salarié frontalier DE une attestation annuelle (Ansässigkeitsbescheinigung) pour sa déclaration fiscale allemande. À prévoir dans le processus de clôture annuelle.</p></div></div>
+
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Frontalier Allemagne</h3><ul><li>Zone frontalière vérifiée (rayon 30 km)</li><li>Formulaire Grenzgänger à préparer pour fin d'année</li><li>Paramétrage IS barème DE (pas le même que FR)</li></ul></div>
+    </div>
+  </div>
+
+  <div id="detail-frontalier-it" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🇮🇹</div>
+      <div><h2>Frontalier Italie — Permis G</h2><div class="sub">Nouveau régime fiscal 2024 — accord CH-IT révisé</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="risk-box blue" style="background:#e6edf8; border-color:#a0bce0;"><div class="icon">📋</div><div><div class="risk-box-title">Changement majeur : Accord CH-IT révisé (entré en vigueur 17 juillet 2023, applicable depuis 1er janvier 2024)</div><p>Distinction entre "anciens frontaliers" (travaillaient déjà avant 2024 en CH) et "nouveaux frontaliers". Régime différent selon la date de début de contrat.</p></div></div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Déterminer le régime applicable</div><div class="phase-tag">RH • Avant J1</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Ancien frontalier (travaillait déjà en CH avant le 17/07/2023)</div><div class="step-desc">Régime transitoire : imposition uniquement en Suisse pendant une période transitoire. Exonéré en Italie. Vérifier attestation de situation antérieure.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Nouveau frontalier (embauche après 17/07/2023)</div><div class="step-desc">Régime partagé : 80% imposé en Suisse à la source, 20% imposable en Italie. L'Italie impute l'IS suisse en crédit d'impôt.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Zones concernées</div><div class="step-desc">Provinces de Como, Varese, Verbano-Cusio-Ossola, Novara, Ossola et province du Verbano pour le Tessin. Pour GR et VS : régions limitrophes italiennes.</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Permis G et documents</div><div class="phase-tag">Salarié + RH • J-20</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Demande permis G (auto-annonce si UE)</div><span class="step-who who-sal">Salarié + RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Justificatif de résidence en Italie (zone éligible)</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Codice fiscale (équivalent NIF italien)</div><div class="step-desc">Requis pour la communication aux autorités italiennes (part des 20%)</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Attestation "nuovo o vecchio frontaliere"</div><div class="step-desc">À faire compléter par le salarié et conserver dans le dossier</div><span class="step-who who-sal">Salarié → RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Frontalier Italie</h3><ul><li>Vérifier si "ancien" ou "nouveau" frontalier → régime fiscal différent</li><li>Récupérer le codice fiscale pour les nouveaux frontaliers</li><li>Informer le salarié de son obligation de déclaration en Italie (nouveaux)</li></ul></div>
+    </div>
+  </div>
+
+  <div id="detail-ue" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🇪🇺</div>
+      <div><h2>Ressortissant UE/AELE — s'installe en Suisse</h2><div class="sub">Permis B ou L — libre circulation des personnes</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="info-card"><strong>Base légale</strong>Accord sur la libre circulation des personnes (ALCP) CH-UE, entré en vigueur 1er juin 2002. Pas de quota pour les ressortissants UE/AELE. Permis B accordé automatiquement sur présentation d'un contrat de travail.</div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Obtention du permis B ou L</div><div class="phase-tag">Salarié + RH • J-14</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Auto-annonce du salarié à l'Office cantonal de la population</div><div class="step-desc">Le salarié doit s'annoncer dans les 14 jours suivant son arrivée en Suisse. RH peut l'accompagner dans cette démarche.</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Documents requis pour l'auto-annonce</div><div class="step-desc">Passeport ou CNI UE + contrat de travail + preuve de logement en Suisse (attestation hébergement ou bail)</div><span class="step-who who-sal">Salarié</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis L si contrat < 12 mois</div><div class="step-desc">Durée déterminée courte → Permis L (séjour court). Si > 12 mois ou CDI → Permis B.</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Imposition à la source (IS)</div><div class="phase-tag">FID • J1</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">IS obligatoire dès J1 (permis B)</div><div class="step-desc">Tout salarié avec permis B (non-CH, non-permis C) est soumis à l'imposition à la source. Le taux varie selon le canton, le salaire, la situation familiale.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Fiche de données IS à remplir par le salarié</div><div class="step-desc">État civil, nombre d'enfants, revenus du conjoint — à transmettre à la fiduciaire avant la 1ère paie</div><span class="step-who who-sal">Salarié → RH → FID</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration annuelle IS au canton</div><div class="step-desc">Si salaire annuel > CHF 120 000 (2024) : le salarié doit faire une déclaration ordinaire complémentaire (DOC) au canton. En dessous : l'IS est libératoire (pas de déclaration personnelle).</div><span class="step-who who-sal">Salarié</span></div></div>
+        </div>
+      </div>
+
+      <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Seuil CHF 120 000 — vigilance IS</div><p>Au-delà de CHF 120 000/an de salaire brut, le salarié (permis B) doit obligatoirement déposer une Déclaration Ordinaire Complémentaire (DOC) dans son canton. L'IS ne suffit plus — le salarié peut devoir un complément ou obtenir un remboursement. Informer le salarié dès l'embauche.</p></div></div>
+
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Ressortissant UE</h3><ul><li>Auto-annonce faite dans les 14 jours → permis B en cours</li><li>Fiche IS complète reçue avant la 1ère fiche de paie</li><li>Si salaire > CHF 120 000 : informer du DOC obligatoire</li></ul></div>
+    </div>
+  </div>
+
+  <div id="detail-hors-ue" class="detail-panel">
+    <div class="detail-header">
+      <div class="flag">🌍</div>
+      <div><h2>Ressortissant hors UE/AELE</h2><div class="sub">Permis B — contingent cantonal — procédure longue</div></div>
+    </div>
+    <div class="detail-body">
+      <div class="risk-box red"><div class="icon">🔴</div><div><div class="risk-box-title">Procédure la plus complexe — Prévoir 8 à 16 semaines</div><p>Soumis aux contingents cantonaux et fédéraux. Alpineo doit démontrer qu'aucun candidat suisse ou UE/AELE disponible. Risque de refus si marché du travail non justifié.</p></div></div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Procédure d'autorisation préalable</div><div class="phase-tag">RH • J-90 à J-45</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Vérification de la disponibilité du quota cantonal</div><div class="step-desc">Chaque canton dispose d'un contingent annuel de permis B pour ressortissants hors-UE. Vérifier auprès de l'Office cantonal des migrations avant toute promesse d'embauche.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Justification de la priorité nationale (marché du travail)</div><div class="step-desc">Alpineo doit prouver que le poste ne peut pas être occupé par un ressortissant suisse ou UE. En pratique : annonce sur les ORP cantonaux, preuve de recrutement actif, compétences très spécifiques justifiées.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Dépôt de demande de permis B auprès du canton</div><div class="step-desc">Formulaire spécifique + contrat de travail + CV + diplômes + lettre de motivation employeur + preuve de logement. À déposer avant que le salarié arrive en Suisse.</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Validation SEM (Secrétariat d'État aux migrations)</div><div class="step-desc">Le canton transmet au SEM pour validation fédérale. Délai : 4-12 semaines. Le salarié ne peut pas commencer avant l'obtention.</div><span class="step-who who-rh">RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Après obtention du permis B</div><div class="phase-tag">Même processus que UE</div></div>
+        <div class="phase-body">
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">IS à la source — mêmes règles que permis B UE</div><div class="step-desc">Barème IS cantonal, fiche de données IS, seuil CHF 120 000</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration AVS, LPP, LAA — idem UE</div><span class="step-who who-rh">RH</span></div></div>
+          <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Visa de travail si pays hors zone Schengen</div><div class="step-desc">Si le salarié vient d'un pays nécessitant un visa : prévoir visa travail via l'ambassade suisse dans le pays d'origine avant l'entrée en Suisse</div><span class="step-who who-sal">Salarié + RH</span></div></div>
+        </div>
+      </div>
+
+      <div class="quick-check"><h3>⚡ Check rapide RRH — Hors UE</h3><ul><li>Quota cantonal disponible vérifié AVANT promesse d'embauche</li><li>Justification "marché du travail" documentée et archivée</li><li>Aucun début de mission possible sans permis en main</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : IMPOSITION À LA SOURCE ══════════════ -->
+<div id="page-imposition" class="page">
+  <div class="hero">
+    <div class="hero-label">Fiscalité</div>
+    <h1>Imposition à la source (IS)<br>Guide opérationnel complet</h1>
+    <p>Qui est concerné, comment calculer le taux, que déclarer, et à quelle fréquence.</p>
+  </div>
+
+  <div class="section-title">Qui est soumis à l'IS ?</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Statut</th><th>IS ?</th><th>Taux / règle</th><th>Libératoire ?</th></tr></thead>
+      <tbody>
+        <tr><td>National suisse (CH)</td><td class="n">Non</td><td>Taxation ordinaire</td><td>—</td></tr>
+        <tr><td>Permis C</td><td class="n">Non</td><td>Taxation ordinaire</td><td>—</td></tr>
+        <tr><td>Permis B (résident)</td><td class="y">Oui</td><td>Barème cantonal complet</td><td class="cond">Libératoire si &lt; CHF 120k</td></tr>
+        <tr><td>Permis G — Frontalier FR</td><td class="y">Oui</td><td>Max 4,5% du brut</td><td class="y">Oui</td></tr>
+        <tr><td>Permis G — Frontalier DE</td><td class="y">Oui</td><td>Barème réduit CH-DE</td><td class="cond">Décl. complémentaire DE</td></tr>
+        <tr><td>Permis G — Frontalier IT (ancien)</td><td class="y">Oui</td><td>Barème CH uniquement</td><td class="y">Oui (régime transitoire)</td></tr>
+        <tr><td>Permis G — Frontalier IT (nouveau)</td><td class="y">Oui</td><td>80% CH / 20% IT</td><td class="n">Non — décl. IT requise</td></tr>
+        <tr><td>Permis L (court séjour)</td><td class="y">Oui</td><td>Barème cantonal</td><td class="y">Oui si &lt; CHF 120k</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Les codes barèmes IS — À connaître</div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Codes barèmes principaux <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="margin-bottom:10px; font-size:13px; color:var(--ink2)">Le code barème IS est attribué selon la situation familiale du salarié. Il est utilisé par la fiduciaire pour calculer la retenue mensuelle.</p>
+        <table class="docs-table">
+          <thead><tr><th>Code</th><th>Profil</th><th>Remarques</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A</strong></td><td>Célibataire, sans enfant</td><td>Taux le plus élevé</td></tr>
+            <tr><td><strong>B</strong></td><td>Marié, conjoint sans revenu</td><td>Déduction pour conjoint</td></tr>
+            <tr><td><strong>C</strong></td><td>Marié, double revenu (conjoint travaille aussi)</td><td>Taux intermédiaire</td></tr>
+            <tr><td><strong>D</strong></td><td>Célibataire avec enfant(s) à charge</td><td>Déduction enfants</td></tr>
+            <tr><td><strong>E</strong></td><td>Non-résident UE avec double imposition</td><td>Cas spécifiques frontaliers</td></tr>
+            <tr><td><strong>G/H</strong></td><td>Codes spéciaux frontaliers selon canton</td><td>Vérifier avec fiduciaire</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Que faire si le salarié change de situation ? <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2)">Le salarié doit notifier l'employeur de tout changement de situation dans les <strong>30 jours</strong> (mariage, naissance, séparation, déménagement, changement emploi conjoint). L'employeur transmet à la fiduciaire pour recalcul du taux IS dès le mois suivant. À documenter dans le dossier RH.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Déclaration IS à l'AFC cantonale <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2); margin-bottom:8px">L'employeur (ou sa fiduciaire) est responsable de :</p>
+        <ul style="font-size:13px; color:var(--ink2); padding-left:20px; line-height:2">
+          <li>Retenir l'IS chaque mois sur le salaire brut</li>
+          <li>Reverser l'IS à l'AFC cantonale (mensuel ou trimestriel selon le canton)</li>
+          <li>Établir le certificat de salaire annuel mentionnant l'IS retenu (fin janvier N+1)</li>
+          <li>Conserver les justificatifs 10 ans</li>
+        </ul>
+        <p style="margin-top:10px; font-size:13px; color:var(--red); font-weight:500">Sanction si non-reversement : l'employeur est solidairement responsable de l'IS non versé + intérêts de retard + amendes administratives.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Exemples chiffrés IS — par canton et situation 2025</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Profil</th><th>Salaire brut/mois</th><th>Genève</th><th>Vaud</th><th>Zurich</th><th>Neuchâtel</th></tr></thead>
+      <tbody>
+        <tr><td>Célibataire, permis B (code A)</td><td>CHF 6 000</td><td>~CHF 720 (12%)</td><td>~CHF 660 (11%)</td><td>~CHF 900 (15%)</td><td>~CHF 720 (12%)</td></tr>
+        <tr><td>Célibataire, permis B (code A)</td><td>CHF 10 000</td><td>~CHF 1 700 (17%)</td><td>~CHF 1 550 (15,5%)</td><td>~CHF 2 200 (22%)</td><td>~CHF 1 650 (16,5%)</td></tr>
+        <tr><td>Marié, conjoint sans revenu (code B)</td><td>CHF 8 000</td><td>~CHF 880 (11%)</td><td>~CHF 800 (10%)</td><td>~CHF 1 120 (14%)</td><td>~CHF 840 (10,5%)</td></tr>
+        <tr><td>Marié, double revenu (code C)</td><td>CHF 8 000</td><td>~CHF 1 200 (15%)</td><td>~CHF 1 040 (13%)</td><td>~CHF 1 520 (19%)</td><td>~CHF 1 120 (14%)</td></tr>
+        <tr><td>Frontalier FR, célibataire (code A)</td><td>CHF 8 000</td><td>CHF 360 (4,5%)</td><td>CHF 360 (4,5%)</td><td class="n">N/A</td><td>CHF 360 (4,5%)</td></tr>
+        <tr><td>Frontalier FR, marié 1 rev. (code B)</td><td>CHF 8 000</td><td>CHF 280–320 (~3,8%)</td><td>CHF 280–320</td><td class="n">N/A</td><td>CHF 280–320</td></tr>
+        <tr><td>Monoparental, 2 enfants (code H)</td><td>CHF 7 000</td><td>~CHF 700 (10%)</td><td>~CHF 630 (9%)</td><td>~CHF 980 (14%)</td><td>~CHF 700 (10%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small" style="margin-bottom:1.5rem">⚠️ Valeurs indicatives 2025 — toujours confirmer via les barèmes officiels AFC du canton ou avec la fiduciaire avant la première paie.</p>
+
+  <div class="section-title">Calendrier des obligations IS employeur</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">📅</div><div class="phase-title">Obligations mensuelles et annuelles</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Chaque mois — Retenue IS sur salaire brut</div><div class="step-desc">L'employeur retient l'IS sur le salaire brut versé. Le montant figure sur la fiche de paie. Aucune exception possible.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Versement à l'AFC cantonale — délai selon canton</div><div class="step-desc"><strong>Genève :</strong> mensuel, avant le 15 du mois suivant. <strong>Vaud :</strong> trimestriel (petits employeurs) ou mensuel. <strong>Zurich :</strong> mensuel, avant le 15. <strong>Neuchâtel :</strong> trimestriel.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">31 janvier N+1 — Certificat de salaire et attestation IS</div><div class="step-desc">Document obligatoire remis à chaque salarié soumis à l'IS. Mentionne le salaire brut annuel et le total IS retenu. Sert de base pour la déclaration personnelle du salarié si applicable.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Janvier — Recalcul des taux si changement de situation</div><div class="step-desc">Mariage, naissance, séparation, déménagement déclarés en N → nouveau taux IS appliqué dès janvier N+1 si pas encore mis à jour.</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Sanction en cas de non-reversement</div><div class="step-desc">L'employeur est solidairement responsable de l'IS non versé. Intérêts de retard (taux cantonal ~3–5% par an) + rappel immédiat. En cas de fraude : sanction pénale possible.</div><span class="step-who who-rh">⚠️ Risque</span></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Déclaration Ordinaire Complémentaire (DOC) — Seuil CHF 120 000</div>
+  <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Obligation salarié — Salaire brut annuel > CHF 120 000</div><p>Tout salarié soumis à l'IS (permis B ou L) dont le salaire brut dépasse CHF 120 000/an doit déposer une Déclaration Ordinaire Complémentaire (DOC) auprès de son canton de travail. L'IS versé par l'employeur est alors un acompte — le canton peut demander un complément ou rembourser. <strong>Action RH :</strong> informer systématiquement le salarié dès que le salaire annuel franchit ce seuil. La responsabilité du dépôt est celle du salarié, pas de l'employeur.</p></div></div>
+
+  <div class="quick-check"><h3>⚡ Check IS mensuel — RRH + Fiduciaire</h3><ul><li>Taux IS correct pour chaque salarié concerné (code barème à jour)</li><li>Montant IS reversé à l'AFC du canton dans les délais</li><li>Tout changement de situation salarié signalé et répercuté</li></ul></div>
+</div>
+
+<!-- ══════════════ PAGE : DOCUMENTS & FORMULAIRES ══════════════ -->
+<div id="page-docs" class="page">
+  <div class="hero">
+    <div class="hero-label">Documents requis</div>
+    <h1>Formulaires & documents<br>par type d'action</h1>
+    <p>Qui collecte quoi, qui complète, qui transmet et à qui.</p>
+  </div>
+
+  <div class="section-title">Documents à collecter auprès du salarié (tous profils)</div>
+  <table class="docs-table">
+    <thead><tr><th>Document</th><th>Qui collecte</th><th>Transmis à</th><th>Obligatoire</th></tr></thead>
+    <tbody>
+      <tr><td><div class="doc-name">Pièce d'identité (CNI ou passeport)</div></td><td><span class="tag tag-rh">RH</span></td><td>Dossier + caisse AVS</td><td>✅ Tous</td></tr>
+      <tr><td><div class="doc-name">Numéro AVS (13 chiffres)</div><div class="doc-who">Si pas de n°AVS : la caisse l'attribuera à la déclaration d'entrée</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Fiduciaire + caisse AVS</td><td>✅ Tous</td></tr>
+      <tr><td><div class="doc-name">IBAN compte bancaire</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Fiduciaire</td><td>✅ Tous</td></tr>
+      <tr><td><div class="doc-name">Fiche données IS (état civil, enfants, revenus conjoint)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Fiduciaire → AFC</td><td>✅ Permis B/G/L</td></tr>
+      <tr><td><div class="doc-name">Permis de travail (B, C, G, L)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Dossier RH + caisse AVS</td><td>✅ Étrangers</td></tr>
+      <tr><td><div class="doc-name">Questionnaire LPP (prévoyance 2e pilier)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Caisse LPP + fiduciaire</td><td>✅ Si salaire ≥ CHF 22 050</td></tr>
+      <tr><td><div class="doc-name">Attestation situation antérieure LPP (certificat de sortie)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Caisse LPP</td><td>⚠️ Si ancien emploi CH</td></tr>
+      <tr><td><div class="doc-name">Justificatif de domicile (France/DE/IT pour frontaliers)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Dossier RH + OCPM</td><td>✅ Frontaliers</td></tr>
+      <tr><td><div class="doc-name">Diplômes (si permis hors UE requis)</div></td><td><span class="tag tag-sal">Salarié</span></td><td>Office migrations cantonal</td><td>✅ Hors UE</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Formulaires officiels à préparer côté RH / Alpineo</div>
+  <table class="docs-table">
+    <thead><tr><th>Formulaire</th><th>Destinataire</th><th>Délai</th></tr></thead>
+    <tbody>
+      <tr><td><div class="doc-name">Déclaration d'entrée salarié — Caisse AVS/AC</div><div class="doc-who">Via portail FER ou ALPS — salaire annuel estimé, date entrée, n° AVS</div></td><td>FER / ALPS</td><td>Avant ou le jour J1</td></tr>
+      <tr><td><div class="doc-name">Déclaration d'affiliation LPP</div><div class="doc-who">Formulaire de la caisse de pension d'Alpineo</div></td><td>Caisse LPP</td><td>30 jours après J1</td></tr>
+      <tr><td><div class="doc-name">Déclaration IS — AFC cantonale</div><div class="doc-who">Mensuelle ou trimestrielle selon canton (souvent via fiduciaire)</div></td><td>AFC Canton</td><td>Mensuel/Trimestriel</td></tr>
+      <tr><td><div class="doc-name">Annonce à l'assureur LAA (accidents)</div><div class="doc-who">Formulaire assureur (Suva ou assureur privé)</div></td><td>Assureur LAA</td><td>J1</td></tr>
+      <tr><td><div class="doc-name">Demande de permis G (si RH fait la démarche)</div><div class="doc-who">Formulaire cantonal de demande de permis frontalier</div></td><td>OCPM / Office migrations</td><td>Avant J1</td></tr>
+      <tr><td><div class="doc-name">Demande de permis B hors UE</div><div class="doc-who">Dossier complet : formulaire + CV + diplômes + contrat + preuve annonces ORP</div></td><td>Office migrations + SEM</td><td>8-16 semaines avant J1</td></tr>
+      <tr><td><div class="doc-name">Certificat de salaire annuel (attestation IS)</div><div class="doc-who">À remettre au salarié et à l'AFC — obligatoire fin janvier N+1</div></td><td>AFC + Salarié</td><td>31 janvier N+1</td></tr>
+      <tr><td><div class="doc-name">Formulaire Grenzgänger (frontalier DE)</div><div class="doc-who">Attestation de l'employeur pour déclaration fiscale allemande</div></td><td>Salarié → autorité DE</td><td>Annuel, déc./janv.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Ce que la fiduciaire doit recevoir à l'entrée</div>
+  <div class="info-card"><strong>📤 Pack complet à transmettre à la fiduciaire suisse dès J+5 max</strong>
+    Contrat de travail signé • Données personnelles salarié (fiche RH complète) • Numéro AVS • IBAN • Copie permis • Fiche IS complète (état civil, enfants, revenus conjoint) • Code barème IS à appliquer • Date de début • Salaire brut mensuel • Taux d'occupation • Informations LPP (si transfert prestation de sortie)
+  </div>
+
+  <div class="section-title">Contenu détaillé de la fiche IS — ce que le salarié doit remplir</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Fiche de données pour l'imposition à la source</div><div class="phase-tag">À signer par le salarié</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Identité et adresse</div><div class="step-desc">Nom, prénom, date de naissance, adresse complète de résidence (y compris pays pour les frontaliers)</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">État civil</div><div class="step-desc">Célibataire / marié(e) / partenariat enregistré / divorcé(e) / veuf(ve) — avec date de mariage/séparation</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Situation du conjoint</div><div class="step-desc">Conjoint travaille ? Oui/Non. Si oui : employeur, salaire annuel estimé, pays d'emploi. Détermine code B vs C.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Enfants à charge</div><div class="step-desc">Nombre, prénoms, dates de naissance, pays de résidence. Si en formation (16–25 ans) : établissement et type de formation.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Autres revenus imposables en Suisse</div><div class="step-desc">Revenus locatifs suisses, activités indépendantes, pensions… À déclarer pour les résidents permis B.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Signature et date</div><div class="step-desc">Le salarié atteste l'exactitude des informations et s'engage à notifier tout changement dans les 30 jours.</div></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Modèles de formulaires par canton</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Canton</th><th>Formulaire IS</th><th>Où télécharger</th><th>Fréquence déclaration employeur</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Genève</strong></td><td>Formulaire AFC-GE IS</td><td>ge.ch/afc → Impôt source</td><td>Mensuel (avant le 15)</td></tr>
+        <tr><td><strong>Vaud</strong></td><td>Formulaire DFIRE VD</td><td>vd.ch/dfire → Personnes physiques</td><td>Trimestriel (petits) / mensuel</td></tr>
+        <tr><td><strong>Zurich</strong></td><td>Quellensteuerblatt ZH</td><td>zh.ch/steuern → Quellensteuer</td><td>Mensuel (avant le 15)</td></tr>
+        <tr><td><strong>Neuchâtel</strong></td><td>Formulaire SCC NE</td><td>ne.ch/scc → Impôt à la source</td><td>Trimestriel</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Documents à archiver — Durée de conservation</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Document</th><th>Durée légale</th><th>Pourquoi</th></tr></thead>
+      <tbody>
+        <tr><td>Contrats de travail + avenants</td><td>10 ans après fin contrat</td><td>Litiges prud'homaux, contrôle AVS</td></tr>
+        <tr><td>Fiches de paie mensuelles</td><td>10 ans</td><td>Contrôle AVS, réclamations salariales</td></tr>
+        <tr><td>Fiches IS signées par salarié</td><td>10 ans</td><td>Contrôle AFC, litiges IS</td></tr>
+        <tr><td>Déclarations AVS / décomptes caisses</td><td>10 ans</td><td>Contrôle caisse AVS</td></tr>
+        <tr><td>Copies permis de travail</td><td>Durée emploi + 5 ans</td><td>Contrôle SEM, OCIRT</td></tr>
+        <tr><td>Attestations LPP (certificats sortie)</td><td>10 ans</td><td>Litiges prévoyance</td></tr>
+        <tr><td>Certificats de salaire annuels</td><td>10 ans</td><td>Contrôle fiscal</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : DÉCLARATIONS FER / AVS ══════════════ -->
+<div id="page-declarations" class="page">
+  <div class="hero">
+    <div class="hero-label">Cotisations sociales</div>
+    <h1>Déclarations FER / AVS / AC<br>Obligations employeur en détail</h1>
+    <p>Tout ce qu'Alpineo doit déclarer, quand et comment.</p>
+  </div>
+
+  <div class="section-title">Le système de cotisations suisse — Vue d'ensemble</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Cotisation</th><th>Taux total 2024</th><th>Part salarié</th><th>Part employeur</th><th>Plafond</th></tr></thead>
+      <tbody>
+        <tr><td><strong>AVS (retraite)</strong></td><td>8,7%</td><td>4,35%</td><td>4,35%</td><td>Pas de plafond</td></tr>
+        <tr><td><strong>AI (invalidité)</strong></td><td>1,4%</td><td>0,7%</td><td>0,7%</td><td>Pas de plafond</td></tr>
+        <tr><td><strong>APG (allocations perte gain)</strong></td><td>0,5%</td><td>0,25%</td><td>0,25%</td><td>Pas de plafond</td></tr>
+        <tr><td><strong>AC (chômage)</strong></td><td>2,2%</td><td>1,1%</td><td>1,1%</td><td>CHF 148 200/an</td></tr>
+        <tr><td><strong>AC solidarité (sur excédent)</strong></td><td>1%</td><td>0,5%</td><td>0,5%</td><td>CHF 148 200 → 370 800</td></tr>
+        <tr><td><strong>LPP (2e pilier)</strong></td><td>Variable</td><td>≥ 50% part sal.</td><td>≥ 50% part emp.</td><td>CHF 88 200/an (2024)</td></tr>
+        <tr><td><strong>LAA (accidents prof.)</strong></td><td>Variable</td><td>0%</td><td>100%</td><td>CHF 148 200/an</td></tr>
+        <tr><td><strong>AANP (accidents non-prof.)</strong></td><td>Variable</td><td>100%</td><td>0%</td><td>CHF 148 200/an</td></tr>
+        <tr><td><strong>IJM / perte de gain maladie</strong></td><td>Variable</td><td>50% ou moins</td><td>50% ou plus</td><td>Selon CCT/accord</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Processus de déclaration FER (pour Alpineo — Suisse romande)</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Déclaration d'entrée</div><div class="phase-tag">RH • Avant J1</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Accéder au portail FER (ou ALPS selon affiliation Alpineo)</div><div class="step-desc">Portail employeur FER Genève ou FER SR selon le canton. Connexion avec les identifiants employeur.</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Saisir la déclaration d'entrée du salarié</div><div class="step-desc">Informations requises : n° AVS, nom, prénom, date de naissance, date d'entrée, nationalité, type de permis, salaire annuel estimé, taux d'activité</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Enregistrer et conserver la confirmation</div><div class="step-desc">Garder le récépissé de déclaration dans le dossier salarié</div><span class="step-who who-rh">RH</span></div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Déclarations périodiques</div><div class="phase-tag">FID • Mensuel</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Transmission masse salariale mensuelle à la caisse AVS</div><div class="step-desc">La fiduciaire déclare chaque mois les salaires bruts versés. La caisse calcule et appelle les cotisations AVS/AI/APG/AC dues.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Paiement des cotisations sur appel</div><div class="step-desc">Sur la base des acomptes provisionnels mensuels ou trimestriels selon la taille de l'entreprise</div><span class="step-who who-fid">Fiduciaire + RH</span></div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">3</div><div class="phase-title">Décompte annuel AVS</div><div class="phase-tag">FID • Janvier N+1</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration annuelle des salaires à la caisse AVS</div><div class="step-desc">Récapitulatif de tous les salaires versés dans l'année, par salarié, avec n° AVS. Base de calcul de la rente future des salariés.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Régularisation des cotisations</div><div class="step-desc">La caisse compare acomptes payés vs réel → appel de complément ou remboursement</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+    </div>
+  </div>
+
+  <div class="risk-box red"><div class="icon">🚨</div><div><div class="risk-box-title">Risque contrôle AVS — Point critique</div><p>La caisse AVS peut contrôler les entreprises à tout moment. Elle vérifiera : exhaustivité des déclarations d'entrée/sortie, cohérence masse salariale déclarée vs payée, affiliation LPP pour tous les salariés éligibles, registre du personnel tenu à jour. Amende possible + rappel de cotisations + intérêts.</p></div></div>
+
+  <div class="section-title">Allocations familiales (AF)</div>
+  <div class="info-card"><strong>Obligation employeur</strong>Si un salarié a des enfants à charge (jusqu'à 16 ans, ou 25 ans si en formation), l'employeur doit verser les AF et se faire rembourser par la caisse AF cantonale. Démarche : annoncer le salarié avec enfants à la caisse AF (souvent la même que la caisse AVS). Montants 2025 : CHF 215/mois par enfant (minimum fédéral), CHF 311/mois à Genève.</div>
+
+  <div class="section-title">Processus FER Genève — Étapes détaillées</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">🏦</div><div class="phase-title">FER Genève — Caisse de compensation principale</div><div class="phase-tag">fer-ge.ch</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Accès au portail employeur FER</div><div class="step-desc">URL : fer-ge.ch → Espace employeur. Identifiants fournis lors de l'affiliation initiale d'Alpineo. Si perte d'accès : contacter FER GE directement (022 715 32 00).</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration d'entrée — Informations requises</div><div class="step-desc">Numéro AVS 13 chiffres • Nom/prénom/date de naissance • Nationalité • Type de permis et numéro • Date d'entrée • Salaire annuel estimé • Taux d'activité • Adresse salarié</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration de sortie</div><div class="step-desc">À faire dès que la date de fin est connue. Salaire effectivement versé sur la dernière période. La caisse émet le certificat AVS final (utile pour la retraite du salarié).</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Décompte annuel — Janvier</div><div class="step-desc">Déclaration de la masse salariale totale versée dans l'année. Base de calcul de la cotisation définitive. La caisse compare avec les acomptes versés → régularisation.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Acomptes mensuels AVS</div><div class="step-desc">FER GE fixe un acompte mensuel basé sur la masse salariale estimée de l'année. En cas de hausse significative des salaires en cours d'année, demander une révision de l'acompte pour éviter un gros rappel en janvier.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Contrôle AVS — Ce que la caisse peut vérifier</div>
+  <div class="risk-box red"><div class="icon">🔴</div><div><div class="risk-box-title">Audit AVS — Points de contrôle prioritaires</div><p>
+    <strong>1. Exhaustivité des déclarations :</strong> tous les salariés déclarés ? Aucun travailleur non déclaré ?<br>
+    <strong>2. Cohérence masse salariale :</strong> total déclaré = total des fiches de paie = total comptabilité.<br>
+    <strong>3. Affiliation LPP :</strong> tous les salariés ≥ CHF 22 050/an affiliés ? Taux corrects par tranche d'âge ?<br>
+    <strong>4. Allocations familiales :</strong> tous les salariés avec enfants annoncés à la caisse AF ?<br>
+    <strong>5. Base de calcul correcte :</strong> primes, 13e mois, indemnités inclus dans la masse salariale soumise à AVS.<br><br>
+    <strong>Rappel possible :</strong> jusqu'à 5 ans en arrière. Intérêts de retard : 5% par an. En cas de fraude : rappel illimité + amende.
+  </p></div></div>
+
+  <div class="section-title">Éléments soumis à AVS vs non soumis</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Élément de rémunération</th><th>Soumis AVS/AC ?</th><th>Soumis IS ?</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>Salaire mensuel de base</td><td class="y">Oui</td><td class="y">Oui</td><td>—</td></tr>
+        <tr><td>13e mois / prime annuelle</td><td class="y">Oui</td><td class="y">Oui</td><td>Prorata mensuel pour IS</td></tr>
+        <tr><td>Bonus / prime performance</td><td class="y">Oui</td><td class="y">Oui</td><td>—</td></tr>
+        <tr><td>Allocations familiales</td><td class="n">Non</td><td class="n">Non</td><td>Remboursement caisse AF</td></tr>
+        <tr><td>Remboursement de frais (note de frais)</td><td class="n">Non</td><td class="n">Non</td><td>Si sur justificatifs réels</td></tr>
+        <tr><td>Forfait frais représentation</td><td class="cond">Partiellement</td><td class="cond">Partiellement</td><td>Règlement frais Alpineo requis</td></tr>
+        <tr><td>Participation à l'assurance maladie (LaMal)</td><td class="n">Non (employeur)</td><td class="n">Non</td><td>Contribution volontaire employeur</td></tr>
+        <tr><td>Voiture de fonction (valeur privée)</td><td class="y">Oui</td><td class="y">Oui</td><td>0,8% du prix véhicule/mois</td></tr>
+        <tr><td>Indemnité de départ (STC)</td><td class="y">Oui (AVS)</td><td class="y">Oui (IS)</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : PAIE & FIDUCIAIRE ══════════════ -->
+<div id="page-paie" class="page">
+  <div class="hero">
+    <div class="hero-label">Paie & Fiduciaire</div>
+    <h1>Ce que la fiduciaire doit faire<br>et ce que RH doit vérifier</h1>
+    <p>Répartition des responsabilités, contrôles mensuels et points de vigilance.</p>
+  </div>
+
+  <div class="section-title">Répartition des rôles</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Tâche</th><th>RH Alpineo</th><th>Fiduciaire</th><th>Salarié</th></tr></thead>
+      <tbody>
+        <tr><td>Collecte des documents d'entrée</td><td class="y">✅ Pilote</td><td class="n">—</td><td class="cond">Fournit docs</td></tr>
+        <tr><td>Déclaration entrée caisse AVS</td><td class="y">✅ Responsable</td><td class="cond">Peut déléguer</td><td class="n">—</td></tr>
+        <tr><td>Calcul du taux IS</td><td class="n">—</td><td class="y">✅</td><td class="cond">Fournit données</td></tr>
+        <tr><td>Paramétrage paie</td><td class="n">—</td><td class="y">✅</td><td class="n">—</td></tr>
+        <tr><td>Versement IS à l'AFC</td><td class="n">—</td><td class="y">✅</td><td class="n">—</td></tr>
+        <tr><td>Paiement cotisations AVS/AC</td><td class="cond">Valide le paiement</td><td class="y">✅ Prépare</td><td class="n">—</td></tr>
+        <tr><td>Certificat de salaire annuel</td><td class="cond">Valide</td><td class="y">✅ Établit</td><td class="n">Reçoit</td></tr>
+        <tr><td>Notification changement situation</td><td class="y">✅ Collecte</td><td class="cond">Met à jour paie</td><td class="y">✅ Notifie RH</td></tr>
+        <tr><td>Suivi permis (renouvellement)</td><td class="y">✅ Alerte</td><td class="n">—</td><td class="cond">Demande renouvellement</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Contrôle mensuel de la fiche de paie</div>
+  <ul class="checklist">
+    <li><strong>IS correctement prélevé</strong> — Vérifier que le code barème IS est le bon et que le montant correspond au taux attendu</li>
+    <li><strong>AVS/AI/APG/AC prélevés</strong> — Les taux ne changent qu'une fois par an (janvier). Vérifier cohérence.</li>
+    <li><strong>LPP prélevé</strong> — Montant cohérent avec le plan de pension d'Alpineo</li>
+    <li><strong>AANP prélevée</strong> — À la charge du salarié (si ≥ 8h/semaine). Taux selon assureur.</li>
+    <li><strong>Allocations familiales versées</strong> si enfants à charge déclarés</li>
+    <li><strong>Pas de retenue IS</strong> pour les nationaux suisses et permis C</li>
+    <li><strong>Salaire brut conforme</strong> au contrat (y compris primes éventuelles)</li>
+  </ul>
+
+  <div class="section-title">Checklist de fin d'année (décembre / janvier)</div>
+  <ul class="checklist">
+    <li>Certificats de salaire établis et transmis (avant fin janvier N+1)</li>
+    <li>Décompte annuel AVS transmis à la caisse</li>
+    <li>Réconciliation IS annuelle avec l'AFC du canton</li>
+    <li>Formulaire Grenzgänger préparé pour les frontaliers allemands</li>
+    <li>Vérification des taux cotisations pour l'année N+1 (changements OFAS)</li>
+    <li>Renouvellement des permis arrivant à échéance dans les 6 mois</li>
+    <li>Mise à jour des barèmes IS si changement de situation salarié</li>
+    <li>LPP : envoi attestation de prévoyance à chaque salarié</li>
+  </ul>
+
+  <div class="section-title">Exemple de fiche de paie — Frontalier FR, CHF 8 000 brut, 2 enfants</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">💶</div><div class="phase-title">Simulation paie mensuelle — Genève, Code B+2 enfants</div><div class="phase-tag">Illustratif 2025</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Salaire brut mensuel</div><div class="step-desc"><strong>+ CHF 8 000,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">− AVS/AI/APG salarié (5,3% du brut)</div><div class="step-desc">AVS 4,35% + AI 0,7% + APG 0,25% = <strong>− CHF 424,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">− AC salarié (1,1% du brut)</div><div class="step-desc"><strong>− CHF 88,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">− AANP salarié (~1,3%)</div><div class="step-desc"><strong>− CHF 104,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">− LPP salarié (part ~7%)</div><div class="step-desc"><strong>− CHF 280,00</strong> (selon plan de pension Alpineo)</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">− IS frontalier FR (code B, ~3,5%)</div><div class="step-desc"><strong>− CHF 280,00</strong> (plafonné 4,5% — code B marié)</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ Allocations familiales (2 enfants × CHF 311 à GE)</div><div class="step-desc"><strong>+ CHF 622,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">= SALAIRE NET À PAYER</div><div class="step-desc"><strong style="font-size:15px">≈ CHF 7 446,00</strong> — soit ~93% du brut hors AF</div></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Coût employeur total — même profil</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">🏢</div><div class="phase-title">Ce qu'Alpineo paie réellement pour ce salarié</div><div class="phase-tag">Charge patronale estimée 2025</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Salaire brut</div><div class="step-desc"><strong>CHF 8 000,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ AVS/AI/APG employeur (5,3%)</div><div class="step-desc"><strong>+ CHF 424,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ AC employeur (1,1%)</div><div class="step-desc"><strong>+ CHF 88,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ LAA professionnels (~0,5%)</div><div class="step-desc"><strong>+ CHF 40,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ LPP employeur (~7%)</div><div class="step-desc"><strong>+ CHF 280,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">+ IJM maladie employeur (~0,8%)</div><div class="step-desc"><strong>+ CHF 64,00</strong></div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">= Coût total employeur mensuel</div><div class="step-desc"><strong style="font-size:15px">≈ CHF 8 896,00</strong> — soit +11,2% sur le salaire brut</div></div></div>
+    </div>
+  </div>
+  <div class="info-card"><strong>📊 Règle pratique Alpineo</strong>Coût employeur ≈ salaire brut × 1,10 à 1,13 selon le plan LPP et le taux LAA de l'activité. Pour un salaire annuel brut de CHF 96 000 → coût total Alpineo ≈ CHF 106 000–108 000/an.</div>
+
+  <div class="section-title">LPP — Points clés opérationnels</div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Seuils et calcul LPP 2025 <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:8px">Le salaire LPP coordonné = salaire annuel − CHF 25 725 (déduction de coordination). Le taux de cotisation varie selon l'âge :</p>
+        <table class="docs-table">
+          <thead><tr><th>Tranche d'âge</th><th>Taux légal min. total LPP</th><th>Part salarié</th><th>Part employeur</th></tr></thead>
+          <tbody>
+            <tr><td>25–34 ans</td><td>7%</td><td>≥ 3,5%</td><td>≥ 3,5%</td></tr>
+            <tr><td>35–44 ans</td><td>10%</td><td>≥ 5%</td><td>≥ 5%</td></tr>
+            <tr><td>45–54 ans</td><td>15%</td><td>≥ 7,5%</td><td>≥ 7,5%</td></tr>
+            <tr><td>55–65 ans</td><td>18%</td><td>≥ 9%</td><td>≥ 9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Transfert du capital LPP lors d'une entrée <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px;color:var(--ink2)">Quand un salarié arrive chez Alpineo, son capital LPP chez son ancien employeur doit être transféré à la caisse LPP d'Alpineo. <strong>Action RH :</strong> demander le certificat de sortie de l'ancienne caisse LPP dans les 30 jours. Si le salarié arrive de l'étranger et cotisait dans un pilier équivalent : consulter la fiduciaire pour les règles de transfert international.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">LPP et frontaliers — Point spécifique <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px;color:var(--ink2)">Les frontaliers cotisent obligatoirement au LPP suisse (pays d'emploi compétent). À la retraite ou au départ définitif de Suisse, le frontalier peut demander le versement en capital de son avoir LPP, sous conditions. Pour les frontaliers français : le retrait LPP est imposé en France (pas en Suisse) si le salarié a quitté le territoire helvétique.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-check"><h3>⚡ 3 choses à vérifier avant chaque clôture de paie</h3><ul><li>Tous les nouveaux entrants du mois ont une fiche IS complète transmise à la fiduciaire</li><li>Aucun salarié avec permis B ou G n'a une paie sans IS</li><li>Aucune entrée sans déclaration préalable à la caisse AVS</li></ul></div>
+</div>
+
+<!-- ══════════════ PAGE : CHECKLIST ══════════════ -->
+<div id="page-checklist" class="page">
+  <div class="hero">
+    <div class="hero-label">Opérationnel</div>
+    <h1>Checklist RH complète<br>Onboarding salarié Suisse</h1>
+    <p>À utiliser pour chaque nouvelle entrée. Adapter selon le profil du salarié.</p>
+  </div>
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="showInner('cl-avant',event)">Avant J1</button>
+    <button class="inner-tab" onclick="showInner('cl-j1',event)">Le jour J</button>
+    <button class="inner-tab" onclick="showInner('cl-apres',event)">J+5 à M+1</button>
+    <button class="inner-tab" onclick="showInner('cl-annuel',event)">Annuel</button>
+  </div>
+
+  <div id="inner-cl-avant" class="inner-content active">
+    <div class="section-title">Phase pré-embauche (J-30 à J-1)</div>
+    <ul class="checklist">
+      <li><strong>[RH]</strong> Vérifier le type de permis nécessaire selon nationalité et lieu de résidence</li>
+      <li><strong>[RH]</strong> Si permis B hors UE : vérifier quota cantonal disponible AVANT promesse d'embauche</li>
+      <li><strong>[RH]</strong> Envoyer le contrat de travail pour signature (mention du type de permis, taux d'activité, salaire brut)</li>
+      <li><strong>[RH → Salarié]</strong> Envoyer la liste des documents à fournir selon profil (voir page Documents)</li>
+      <li><strong>[Salarié]</strong> Initier la demande de permis G (frontalier) ou auto-annonce (UE) ou permis B (hors UE) auprès du canton</li>
+      <li><strong>[RH]</strong> Vérifier réception et validité des documents d'identité</li>
+      <li><strong>[RH]</strong> Récupérer le numéro AVS (ou noter qu'il sera attribué à la déclaration d'entrée)</li>
+      <li><strong>[RH]</strong> Faire compléter la fiche de données IS (si salarié soumis à IS)</li>
+      <li><strong>[RH]</strong> Faire compléter le questionnaire LPP (si salaire ≥ CHF 22 050/an)</li>
+      <li><strong>[RH → FID]</strong> Pré-préparer le dossier fiduciaire (pack entrée)</li>
+    </ul>
+  </div>
+
+  <div id="inner-cl-j1" class="inner-content">
+    <div class="section-title">Le jour J — Entrée en fonction</div>
+    <ul class="checklist">
+      <li><strong>[RH]</strong> Vérifier que le permis est en main (copie dans le dossier) — si permis en cours de traitement : ne pas laisser commencer sans permis provisoire (attestation de dépôt) sauf si UE avec auto-annonce prouvée</li>
+      <li><strong>[RH]</strong> Déclaration d'entrée à la caisse AVS (FER ou ALPS) si pas déjà faite</li>
+      <li><strong>[RH]</strong> Annonce à l'assureur LAA (accidents professionnels — dès J1 obligatoire)</li>
+      <li><strong>[RH → Salarié]</strong> Remettre et faire signer : règlement intérieur, accord télétravail (avec mention % max si frontalier), politique de confidentialité</li>
+      <li><strong>[RH]</strong> Vérifier que la fiche IS est complète et signée par le salarié</li>
+    </ul>
+  </div>
+
+  <div id="inner-cl-apres" class="inner-content">
+    <div class="section-title">J+5 à M+1</div>
+    <ul class="checklist">
+      <li><strong>[RH → FID]</strong> Transmettre le pack complet à la fiduciaire (J+5 max)</li>
+      <li><strong>[FID]</strong> Paramétrer la paie : IS (code barème + taux), cotisations, LPP</li>
+      <li><strong>[RH]</strong> Affiliation LPP formelle dans les 30 jours suivant J1</li>
+      <li><strong>[FID]</strong> Première fiche de paie conforme générée — RH valide avant envoi</li>
+      <li><strong>[RH]</strong> Vérifier sur la fiche de paie : IS prélevé (si applicable), AVS/AC prélevés, LPP prélevé, AANP prélevée</li>
+      <li><strong>[RH]</strong> Archiver dans le dossier salarié : tous les documents d'entrée, la fiche IS signée, la copie permis, la confirmation caisse AVS</li>
+    </ul>
+  </div>
+
+  <div id="inner-cl-annuel" class="inner-content">
+    <div class="section-title">Tâches annuelles récurrentes</div>
+    <ul class="checklist">
+      <li><strong>[RH]</strong> Janvier : Mettre à jour les taux de cotisations (OFAS publie les taux en décembre N-1)</li>
+      <li><strong>[FID]</strong> Janvier : Établir et transmettre les certificats de salaire (attestation IS incluse)</li>
+      <li><strong>[FID]</strong> Janvier : Décompte annuel AVS à la caisse + régularisation</li>
+      <li><strong>[FID]</strong> Janvier : Réconciliation IS annuelle avec AFC cantonale</li>
+      <li><strong>[RH]</strong> Décembre/Janvier : Formulaire Grenzgänger pour les frontaliers allemands</li>
+      <li><strong>[RH]</strong> Tout au long de l'année : Surveiller les échéances de permis (alerte 4 mois avant expiration)</li>
+      <li><strong>[RH]</strong> Tout au long de l'année : Collecter les changements de situation IS (mariage, naissance, séparation, déménagement)</li>
+      <li><strong>[RH]</strong> LPP : S'assurer que l'attestation annuelle de prévoyance est envoyée à chaque salarié</li>
+    </ul>
+  </div>
+
+  <div class="risk-box red" style="margin-top:2rem"><div class="icon">🔴</div><div><div class="risk-box-title">Les 5 erreurs les plus fréquentes à éviter chez Alpineo</div><p><strong>1.</strong> Laisser un salarié commencer sans permis valide en main → risque pénal employeur<br><strong>2.</strong> Appliquer l'IS à un national suisse ou permis C → trop-prélevé → litige salarié<br><strong>3.</strong> Oublier la déclaration d'entrée caisse AVS → cotisations non versées → rappel + intérêts<br><strong>4.</strong> Ne pas mettre à jour le taux IS suite à un changement de situation → IS incorrect → régularisation pénible<br><strong>5.</strong> Autoriser plus de 40% de télétravail en France sans accord documenté → risque URSSAF pour Alpineo</p></div></div>
+
+  <div class="info-card" style="margin-top:1.5rem"><strong>📌 Sources de référence recommandées</strong>
+    SECO (droit du travail) · OFAS (AVS/LPP) · SEM (permis) · AFC cantonale (IS) · FER Genève / FER SR · OCIRT Genève · AFC fédérale (CDI fiscales)
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : CANTONS ══════════════ -->
+<div id="page-cantons" class="page">
+  <div class="hero">
+    <div class="hero-label">Spécificités cantonales</div>
+    <h1>Genève · Vaud · Zurich · Neuchâtel<br>Ce qui change selon le canton</h1>
+    <p>IS, office des migrations, allocations familiales, spécificités frontalières — les 4 cantons Alpineo en détail.</p>
+  </div>
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="showInner('cant-ge',event)">🏙 Genève</button>
+    <button class="inner-tab" onclick="showInner('cant-vd',event)">🌿 Vaud</button>
+    <button class="inner-tab" onclick="showInner('cant-zh',event)">🏦 Zurich</button>
+    <button class="inner-tab" onclick="showInner('cant-ne',event)">⛰ Neuchâtel</button>
+  </div>
+
+  <!-- GENÈVE -->
+  <div id="inner-cant-ge" class="inner-content active">
+    <div class="risk-box green"><div class="icon">📍</div><div><div class="risk-box-title">Genève — Canton frontalier majeur pour Alpineo</div><p>Canton le plus actif pour les frontaliers français (Ain, Haute-Savoie). Forte concentration de permis G. L'OCIRT et l'IPE sont les deux organes de contrôle du travail à Genève.</p></div></div>
+
+    <div class="section-title">Office des migrations — OCPM Genève</div>
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">🏛</div><div class="phase-title">Office cantonal de la population et des migrations (OCPM)</div><div class="phase-tag">ge.ch/ocpm</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis G frontalier — délai ~3 semaines (UE)</div><div class="step-desc">Auto-annonce en ligne via le portail OCPM. Le salarié peut commencer avec l'attestation de dépôt de demande. Permis valable 5 ans (UE), 1 an renouvelable (hors UE).</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B résidant — délai ~4 semaines (UE)</div><div class="step-desc">Auto-annonce en ligne + inscription commune dans les 14 jours. Pièces : passeport + contrat + preuve de logement.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B hors UE — délai 8-16 semaines</div><div class="step-desc">Dossier complet OCPM → transmission SEM Berne. Quota fédéral : ~4 250 permis B hors UE/an pour toute la Suisse.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Portail en ligne OCPM</div><div class="step-desc">eGuichet cantonal : <strong>ge.ch/ocpm</strong> — déclaration en ligne pour UE/AELE. Formulaires papier pour hors UE.</div></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Imposition à la source — AFC Genève</div>
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Situation</th><th>Code barème GE</th><th>Taux indicatif (CHF 8 000/mois brut)</th><th>Remarque</th></tr></thead>
+        <tbody>
+          <tr><td>Frontalier FR — Célibataire sans enfant</td><td>A (plafonné 4,5%)</td><td>~4,5%</td><td>Max convention FR-CH</td></tr>
+          <tr><td>Frontalier FR — Marié, conjoint sans revenu</td><td>B (plafonné 4,5%)</td><td>~3,5–4%</td><td>Déduction conjoint</td></tr>
+          <tr><td>Frontalier FR — Marié, double revenu</td><td>C (plafonné 4,5%)</td><td>~4,5%</td><td>Conjoint travaille aussi</td></tr>
+          <tr><td>Permis B — Célibataire sans enfant</td><td>A</td><td>~14–16%</td><td>Barème GE complet</td></tr>
+          <tr><td>Permis B — Marié, conjoint sans revenu</td><td>B</td><td>~10–12%</td><td>Barème GE complet</td></tr>
+          <tr><td>Permis B — Marié, double revenu</td><td>C</td><td>~13–15%</td><td>Barème GE complet</td></tr>
+          <tr><td>Permis B — Célibataire avec 1 enfant</td><td>D</td><td>~12–14%</td><td>Déduction enfant</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-bottom:1rem">⚠️ Taux indicatifs 2024 — les taux exacts sont calculés par la fiduciaire via les barèmes officiels AFC Genève. Vérifier sur <strong>ge.ch/afc</strong>.</p>
+
+    <div class="section-title">Allocations familiales — Genève</div>
+    <div class="info-card"><strong>Montants 2024 — Genève (parmi les plus généreux de Suisse)</strong>
+      Enfant 0–15 ans : <strong>CHF 311/mois</strong> (minimum fédéral : CHF 215)<br>
+      Enfant en formation 16–25 ans : <strong>CHF 411/mois</strong><br>
+      Allocation de naissance : CHF 1 500 (unique)<br>
+      Allocation d'adoption : CHF 1 500<br>
+      Caisse responsable : CAF Genève (souvent la même que la caisse AVS employeur — FER GE)
+    </div>
+
+    <div class="section-title">Caisse AVS / partenaires à Genève</div>
+    <div class="info-card"><strong>FER Genève — fer-ge.ch</strong>
+      Caisse de compensation principale en Suisse romande. Gère AVS/AI/APG/AC + allocations familiales + LPP pour de nombreux employeurs genevois.<br><br>
+      <strong>OCIRT</strong> (Inspection du travail) — ge.ch/ocirt : contrôle les conditions de travail, salaires minimaux, CCT, détachement.<br>
+      <strong>IPE</strong> (Inspection paritaire) — ipe-geneve.ch : contrôle spécifique des branches sous CCT.
+    </div>
+
+    <div class="section-title">Frontaliers France — Spécificités Genève</div>
+    <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Zone frontalière éligible au permis G depuis GE</div><p>Départements directement limitrophes : <strong>Ain (01)</strong> et <strong>Haute-Savoie (74)</strong>. Un salarié résidant à Lyon (Rhône) n'est pas éligible au permis G genevois — il doit résider dans la zone frontalière.</p></div></div>
+
+    <div class="quick-check"><h3>⚡ Check RRH — Genève</h3><ul><li>Permis G : vérifier que le salarié réside bien dans le 01 ou le 74</li><li>IS : taux plafonné 4,5% frontaliers FR — jamais plus</li><li>AF Genève : CHF 311/mois — bien paramétré dans la paie</li></ul></div>
+  </div>
+
+  <!-- VAUD -->
+  <div id="inner-cant-vd" class="inner-content">
+    <div class="risk-box green"><div class="icon">📍</div><div><div class="risk-box-title">Vaud — Canton frontalier (FR, partiellement)</div><p>Frontaliers principalement depuis la Haute-Savoie (74) et l'Ain (01). Lausanne, Nyon, Morges — zones d'emploi actives pour les consultants.</p></div></div>
+
+    <div class="section-title">Office des migrations — SPOP Vaud</div>
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">🏛</div><div class="phase-title">Service de la population (SPOP)</div><div class="phase-tag">vd.ch/spop</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis G (UE) — Auto-annonce en ligne</div><div class="step-desc">Via le portail cantonal vaudois. Délai de traitement : 2–4 semaines. Attestation provisoire possible dès le dépôt.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B résidant (UE)</div><div class="step-desc">Auto-annonce en ligne + inscription commune Vaud dans les 14 jours. Portail : <strong>vd.ch/spop</strong></div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B hors UE</div><div class="step-desc">Dossier papier ou portail employeur → SPOP → SEM Berne. Quota Vaud : ~500 permis B hors UE/an.</div></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">IS — AFC Vaud (DFIRE)</div>
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Situation</th><th>Code barème VD</th><th>Taux indicatif (CHF 8 000/mois)</th></tr></thead>
+        <tbody>
+          <tr><td>Frontalier FR — Célibataire</td><td>A (plafonné 4,5%)</td><td>~4,5%</td></tr>
+          <tr><td>Frontalier FR — Marié, conjoint sans revenu</td><td>B</td><td>~3,5–4%</td></tr>
+          <tr><td>Permis B — Célibataire sans enfant</td><td>A</td><td>~13–15%</td></tr>
+          <tr><td>Permis B — Marié, conjoint sans revenu</td><td>B</td><td>~9–11%</td></tr>
+          <tr><td>Permis B — Marié, double revenu</td><td>C</td><td>~12–14%</td></tr>
+          <tr><td>Permis B — Monoparental avec enfant(s)</td><td>D/H</td><td>~11–13%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-bottom:1rem">Barèmes officiels sur <strong>vd.ch/dfire</strong> — rubrique Impôt à la source.</p>
+
+    <div class="section-title">Allocations familiales — Vaud</div>
+    <div class="info-card"><strong>Montants 2024 — Vaud</strong>
+      Enfant 0–15 ans : <strong>CHF 215/mois</strong> (minimum fédéral appliqué)<br>
+      Enfant en formation 16–25 ans : <strong>CHF 268/mois</strong><br>
+      Caisse : CVAF (Caisse vaudoise d'allocations familiales) ou caisse patronale employeur
+    </div>
+
+    <div class="section-title">Caisse AVS — Vaud</div>
+    <div class="info-card"><strong>Caisse cantonale vaudoise de compensation (CCVD)</strong> ou caisse interprofessionnelle (FER SR, CGCEE, etc.) selon affiliation Alpineo.<br>Inspection du travail : <strong>SELT</strong> (Service de l'emploi Vaud) — vd.ch/selt</div>
+
+    <div class="quick-check"><h3>⚡ Check RRH — Vaud</h3><ul><li>Déclaration SPOP faite pour chaque nouvel entrant</li><li>Barèmes VD ≠ GE — bien vérifier avec la fiduciaire</li><li>AF Vaud : CHF 215/mois (inférieur à Genève)</li></ul></div>
+  </div>
+
+  <!-- ZURICH -->
+  <div id="inner-cant-zh" class="inner-content">
+    <div class="risk-box blue" style="background:#e6edf8; border-color:#a0bce0;"><div class="icon">📍</div><div><div class="risk-box-title">Zurich — Pas de frontaliers FR — Allemagne principalement</div><p>Canton germanophone. Frontaliers depuis l'Allemagne (Bade-Wurtemberg, zone 30 km). Taux IS parmi les plus élevés de Suisse pour les hauts salaires.</p></div></div>
+
+    <div class="section-title">Office des migrations — MiGR Zurich</div>
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">🏛</div><div class="phase-title">Migrationsamt des Kantons Zürich (MiGR)</div><div class="phase-tag">zh.ch/migrationsamt</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis G DE (UE) — Auto-annonce en ligne</div><div class="step-desc">Portail MiGR Zurich. Communication en allemand. Délai : 2–4 semaines.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B résidant — inscription commune Zurich (EWK)</div><div class="step-desc">Dans les 14 jours suivant l'arrivée, le salarié s'annonce à l'EWK (Einwohnerkontrolle) de sa commune.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Formulaire Grenzgänger spécifique ZH-DE</div><div class="step-desc">L'employeur fournit chaque année l'attestation "Ansässigkeitsbescheinigung" au salarié frontalier allemand pour sa déclaration fiscale en Allemagne.</div></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">IS — Kantonales Steueramt Zürich</div>
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Situation</th><th>Code barème ZH</th><th>Taux indicatif (CHF 8 000/mois)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Frontalier DE — Célibataire</td><td>A (accord CH-DE)</td><td>~4,5% reversé DE</td><td>Convention CH-DE</td></tr>
+          <tr><td>Permis B — Célibataire sans enfant</td><td>A</td><td>~18–22%</td><td>Taux ZH élevé</td></tr>
+          <tr><td>Permis B — Marié, conjoint sans revenu</td><td>B</td><td>~12–15%</td><td></td></tr>
+          <tr><td>Permis B — Marié, double revenu</td><td>C</td><td>~16–20%</td><td></td></tr>
+          <tr><td>Permis B — Monoparental avec enfant(s)</td><td>D/H</td><td>~14–17%</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-bottom:1rem">⚠️ Zurich a des taux IS nettement plus élevés que la Suisse romande. À bien anticiper pour les candidats qui comparent les offres nettes. Barèmes sur <strong>zh.ch/steuern</strong>.</p>
+
+    <div class="section-title">Allocations familiales — Zurich</div>
+    <div class="info-card"><strong>Montants 2024 — Zurich</strong>
+      Enfant 0–15 ans : <strong>CHF 215/mois</strong> (minimum fédéral)<br>
+      Enfant en formation 16–25 ans : <strong>CHF 268/mois</strong><br>
+      Caisse : Ausgleichskasse des Kantons Zürich ou caisse privée de l'employeur
+    </div>
+
+    <div class="section-title">Caisse AVS — Zurich</div>
+    <div class="info-card"><strong>Ausgleichskasse des Kantons Zürich</strong> (AK ZH) ou caisse professionnelle selon secteur.<br>Inspection du travail : <strong>AWA</strong> (Amt für Wirtschaft und Arbeit) — zh.ch/awa<br><strong>Important :</strong> toutes les communications administratives sont en allemand.</div>
+
+    <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Point spécifique ZH — Salaire net vs brut</div><p>Le taux IS à Zurich étant élevé pour les permis B (jusqu'à 22% sur CHF 8 000/mois), il est fortement recommandé de présenter le salaire NET lors du recrutement à Zurich pour éviter les mauvaises surprises. L'écart brut/net est significativement plus important qu'à Genève ou Vaud.</p></div></div>
+
+    <div class="quick-check"><h3>⚡ Check RRH — Zurich</h3><ul><li>Communications en allemand — prévoir traduction si nécessaire</li><li>Taux IS ZH élevé → informer le candidat du net avant signature</li><li>Frontaliers : uniquement depuis Allemagne (pas de frontalier FR à ZH)</li></ul></div>
+  </div>
+
+  <!-- NEUCHÂTEL -->
+  <div id="inner-cant-ne" class="inner-content">
+    <div class="risk-box green"><div class="icon">📍</div><div><div class="risk-box-title">Neuchâtel — Canton frontalier France (Doubs, Jura)</div><p>Frontaliers depuis les départements du Doubs (25) et du Jura (39). Canton plus petit, processus souvent plus rapide qu'à Genève.</p></div></div>
+
+    <div class="section-title">Office des migrations — SMIG Neuchâtel</div>
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">🏛</div><div class="phase-title">Service des migrations (SMIG)</div><div class="phase-tag">ne.ch/smig</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis G (UE) — Auto-annonce en ligne ou par courrier</div><div class="step-desc">SMIG Neuchâtel. Délai généralement plus court qu'à Genève : 1–3 semaines. Documents : passeport + contrat + justificatif domicile France.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Permis B résidant</div><div class="step-desc">Auto-annonce au contrôle des habitants de la commune de résidence (ex. ville de Neuchâtel) dans les 14 jours.</div></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">IS — Service cantonal des contributions (SCC)</div>
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Situation</th><th>Code barème NE</th><th>Taux indicatif (CHF 8 000/mois)</th></tr></thead>
+        <tbody>
+          <tr><td>Frontalier FR — Célibataire</td><td>A (plafonné 4,5%)</td><td>~4,5%</td></tr>
+          <tr><td>Frontalier FR — Marié, conjoint sans revenu</td><td>B</td><td>~3–4%</td></tr>
+          <tr><td>Permis B — Célibataire sans enfant</td><td>A</td><td>~14–17%</td></tr>
+          <tr><td>Permis B — Marié, conjoint sans revenu</td><td>B</td><td>~10–12%</td></tr>
+          <tr><td>Permis B — Marié, double revenu</td><td>C</td><td>~12–15%</td></tr>
+          <tr><td>Permis B — Monoparental avec enfant(s)</td><td>D</td><td>~11–13%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-bottom:1rem">Barèmes officiels sur <strong>ne.ch/scc</strong>. Taux comparables à Vaud, légèrement inférieurs à Genève.</p>
+
+    <div class="section-title">Allocations familiales — Neuchâtel</div>
+    <div class="info-card"><strong>Montants 2024 — Neuchâtel</strong>
+      Enfant 0–15 ans : <strong>CHF 215/mois</strong><br>
+      Enfant en formation 16–25 ans : <strong>CHF 268/mois</strong><br>
+      Caisse : Caisse cantonale de compensation NE (CCC NE)
+    </div>
+
+    <div class="section-title">Zone frontalière FR — Spécificités NE</div>
+    <div class="info-card"><strong>Départements éligibles au permis G depuis NE</strong><br>
+      Doubs (25), Jura (39), Haute-Saône (70) partiellement. Un salarié résidant en Côte-d'Or (21) ou dans le Rhône ne peut pas obtenir un permis G pour travailler à Neuchâtel.
+    </div>
+
+    <div class="quick-check"><h3>⚡ Check RRH — Neuchâtel</h3><ul><li>Zone frontalière FR : Doubs (25) et Jura (39) principalement</li><li>Délais SMIG souvent plus courts que GE — avantage opérationnel</li><li>Mêmes règles IS 4,5% plafond frontalier FR que les autres cantons romands</li></ul></div>
+  </div>
+
+  <!-- COMPARATIF -->
+  <div class="section-title" style="margin-top:2rem">Comparatif des 4 cantons</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Critère</th><th>Genève 🏙</th><th>Vaud 🌿</th><th>Zurich 🏦</th><th>Neuchâtel ⛰</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Office migrations</strong></td><td>OCPM</td><td>SPOP</td><td>MiGR</td><td>SMIG</td></tr>
+        <tr><td><strong>Délai permis G (UE)</strong></td><td>2–4 sem.</td><td>2–4 sem.</td><td>2–4 sem.</td><td>1–3 sem.</td></tr>
+        <tr><td><strong>IS Permis B célibataire CHF 8k/mois</strong></td><td>~14–16%</td><td>~13–15%</td><td>~18–22%</td><td>~14–17%</td></tr>
+        <tr><td><strong>IS frontalier FR (plafonné)</strong></td><td>4,5% max</td><td>4,5% max</td><td>N/A</td><td>4,5% max</td></tr>
+        <tr><td><strong>AF enfant 0–15 ans</strong></td><td>CHF 311</td><td>CHF 215</td><td>CHF 215</td><td>CHF 215</td></tr>
+        <tr><td><strong>Frontaliers FR éligibles</strong></td><td>Ain (01), H-Savoie (74)</td><td>Ain (01), H-Savoie (74)</td><td class="n">Non</td><td>Doubs (25), Jura (39)</td></tr>
+        <tr><td><strong>Frontaliers DE éligibles</strong></td><td class="n">Non</td><td class="n">Non</td><td class="y">Oui (BW, Bavière)</td><td class="n">Non</td></tr>
+        <tr><td><strong>Langue admin</strong></td><td>Français</td><td>Français</td><td>Allemand</td><td>Français</td></tr>
+        <tr><td><strong>Caisse AVS principale</strong></td><td>FER Genève</td><td>CCVD / FER SR</td><td>AK ZH</td><td>CCC NE</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE : SITUATIONS FAMILIALES ══════════════ -->
+<div id="page-situations" class="page">
+  <div class="hero">
+    <div class="hero-label">Situations personnelles</div>
+    <h1>Impact de la situation familiale<br>sur la paie et l'IS</h1>
+    <p>Célibataire, marié, avec ou sans enfants — ce que ça change concrètement pour le taux IS, les déductions et les obligations RH.</p>
+  </div>
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="showInner('sit-celib',event)">Célibataire</button>
+    <button class="inner-tab" onclick="showInner('sit-marie-1rev',event)">Marié — 1 revenu</button>
+    <button class="inner-tab" onclick="showInner('sit-marie-2rev',event)">Marié — 2 revenus</button>
+    <button class="inner-tab" onclick="showInner('sit-enfants',event)">Avec enfant(s)</button>
+    <button class="inner-tab" onclick="showInner('sit-mono',event)">Famille monoparentale</button>
+    <button class="inner-tab" onclick="showInner('sit-pacs',event)">Concubinage / PACS</button>
+  </div>
+
+  <!-- CÉLIBATAIRE -->
+  <div id="inner-sit-celib" class="inner-content active">
+    <div class="section-title">Célibataire sans enfant — Code barème A</div>
+    <div class="risk-box red"><div class="icon">💰</div><div><div class="risk-box-title">Taux IS le plus élevé — Code A</div><p>Le célibataire sans charge de famille est imposé au taux le plus fort du barème IS cantonal. C'est le cas "de base" — aucune déduction liée à la famille.</p></div></div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Ce que RH doit collecter</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Fiche IS simplifiée</div><div class="step-desc">État civil : célibataire / divorcé / veuf. Aucun enfant à charge. Code barème A appliqué automatiquement.</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Aucune allocation familiale à déclarer</div><div class="step-desc">Pas d'annonce à la caisse AF — simplification du dossier</div><span class="step-who who-rh">RH</span></div></div>
+      </div>
+    </div>
+
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Canton</th><th>Taux IS indicatif (CHF 6 000/mois)</th><th>Taux IS indicatif (CHF 10 000/mois)</th></tr></thead>
+        <tbody>
+          <tr><td>Genève</td><td>~11–13%</td><td>~18–21%</td></tr>
+          <tr><td>Vaud</td><td>~10–12%</td><td>~17–20%</td></tr>
+          <tr><td>Zurich</td><td>~14–17%</td><td>~20–24%</td></tr>
+          <tr><td>Neuchâtel</td><td>~11–13%</td><td>~17–20%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Taux indicatifs 2024 — toujours confirmer avec la fiduciaire sur les barèmes cantonaux officiels.</p>
+
+    <div class="info-card" style="margin-top:1rem"><strong>✅ Simplification administrative</strong>Célibataire sans enfant = dossier le plus simple. Fiche IS en 5 minutes, pas d'AF à déclarer, code barème A sans ambiguïté.</div>
+  </div>
+
+  <!-- MARIÉ 1 REVENU -->
+  <div id="inner-sit-marie-1rev" class="inner-content">
+    <div class="section-title">Marié — Conjoint sans revenu professionnel — Code barème B</div>
+    <div class="info-card"><strong>Définition du code B</strong>Le salarié est marié (ou partenariat enregistré) ET le conjoint n'exerce pas d'activité lucrative en Suisse (ni à l'étranger pour les résidents). Le barème B est plus favorable que A car il intègre une déduction pour "charge de famille".</div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Ce que RH doit collecter</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Acte de mariage ou certificat de partenariat</div><div class="step-desc">Document à conserver dans le dossier RH. Pas obligatoire de le transmettre à l'AFC mais disponible en cas de contrôle.</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration sur l'honneur : conjoint sans revenu</div><div class="step-desc">Le salarié certifie que son conjoint n'exerce pas d'activité lucrative. Si la situation change → notification obligatoire dans les 30 jours.</div><span class="step-who who-sal">Salarié → RH</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Mise à jour si conjoint reprend une activité</div><div class="step-desc">Passage du code B au code C dès le mois suivant la reprise d'activité du conjoint. Impact : taux IS augmente → salarié doit le signaler.</div><span class="step-who who-rh">RH → FID</span></div></div>
+      </div>
+    </div>
+
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Canton</th><th>Taux IS B indicatif (CHF 6 000/mois)</th><th>Taux IS B indicatif (CHF 10 000/mois)</th><th>Économie vs code A</th></tr></thead>
+        <tbody>
+          <tr><td>Genève</td><td>~7–9%</td><td>~12–15%</td><td>~3–5 pts</td></tr>
+          <tr><td>Vaud</td><td>~6–8%</td><td>~11–14%</td><td>~3–5 pts</td></tr>
+          <tr><td>Zurich</td><td>~9–12%</td><td>~15–19%</td><td>~4–6 pts</td></tr>
+          <tr><td>Neuchâtel</td><td>~7–9%</td><td>~12–15%</td><td>~3–5 pts</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Risque : code B appliqué à tort</div><p>Si le conjoint reprend un travail (même à temps partiel) sans en informer l'employeur, le code B est appliqué à tort. À la régularisation annuelle, le salarié devra rembourser le différentiel IS. Bien expliquer cette obligation au salarié à l'onboarding.</p></div></div>
+  </div>
+
+  <!-- MARIÉ 2 REVENUS -->
+  <div id="inner-sit-marie-2rev" class="inner-content">
+    <div class="section-title">Marié — Double revenu — Code barème C</div>
+    <div class="info-card"><strong>Définition du code C</strong>Le salarié est marié ET le conjoint exerce également une activité lucrative (en Suisse ou à l'étranger). Le barème C est intermédiaire — moins avantageux que B, mais légèrement plus favorable que A dans certains cas.</div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Ce que RH doit collecter</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Confirmation que les deux conjoints travaillent</div><div class="step-desc">Nature de l'emploi du conjoint, pays d'emploi, revenus approximatifs du conjoint (pour certains cantons qui affinent le taux C)</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Cas spécifique frontalier France — code C</div><div class="step-desc">Si le salarié frontalier (permis G) est marié et que son conjoint travaille en France → code C appliqué avec plafond 4,5% maintenu. La situation du conjoint en France est prise en compte.</div><span class="step-who who-rh">RH → FID</span></div></div>
+      </div>
+    </div>
+
+    <div class="info-card" style="margin-top:1rem"><strong>⚡ Point pratique double imposition</strong>Dans une situation code C où le conjoint travaille en France (cas frontalier), les revenus du foyer fiscal sont déclarés en France. L'IS suisse (4,5% max) est un crédit d'impôt en France. Le couple peut avoir intérêt à optimiser la répartition des revenus — mais cela relève du conseil fiscal personnel, pas d'Alpineo.</div>
+  </div>
+
+  <!-- AVEC ENFANTS -->
+  <div id="inner-sit-enfants" class="inner-content">
+    <div class="section-title">Enfant(s) à charge — Codes D, E, F, G (selon canton et situation)</div>
+    <div class="info-card"><strong>Principe général</strong>Chaque enfant à charge donne droit à une déduction IS. Le code barème change selon le nombre d'enfants et la situation conjugale. Les enfants doivent être à charge effective du salarié (résidant avec lui ou pris en charge financièrement).</div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Documents à collecter par enfant</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Acte de naissance de chaque enfant</div><div class="step-desc">Ou livret de famille. Pour les enfants nés à l'étranger : acte traduit si nécessaire (pas toujours exigé).</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déclaration de garde (si parents séparés)</div><div class="step-desc">Qui a la garde effective ? Seul le parent ayant la garde principale peut déduire l'enfant de l'IS.</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Pour les enfants en formation (16–25 ans)</div><div class="step-desc">Attestation d'inscription dans l'établissement de formation (école, université, apprentissage)</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Annonce allocation familiale à la caisse AF</div><div class="step-desc">Démarche obligatoire : l'employeur annonce chaque enfant à charge à sa caisse AF pour versement des allocations.</div><span class="step-who who-rh">RH</span></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Impact IS selon nombre d'enfants</div>
+    <div class="matrix">
+      <table>
+        <thead><tr><th>Situation</th><th>Code type</th><th>Réduction IS approx. par enfant</th><th>Allocations familiales/mois</th></tr></thead>
+        <tbody>
+          <tr><td>Célibataire + 1 enfant</td><td>D</td><td>~1,5–3 pts de taux</td><td>CHF 215–311 selon canton</td></tr>
+          <tr><td>Célibataire + 2 enfants</td><td>D (ajusté)</td><td>~2–4 pts de taux</td><td>CHF 430–622</td></tr>
+          <tr><td>Marié 1 rev. + 1 enfant</td><td>B+1</td><td>~1–2 pts supplémentaires vs B</td><td>CHF 215–311</td></tr>
+          <tr><td>Marié 1 rev. + 2 enfants</td><td>B+2</td><td>~2–3 pts supplémentaires vs B</td><td>CHF 430–622</td></tr>
+          <tr><td>Marié 2 rev. + 1 enfant</td><td>C+1</td><td>~1–2 pts supplémentaires vs C</td><td>CHF 215–311</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Naissance en cours de contrat — Action RH requise</div><p>Dès qu'un salarié annonce la naissance d'un enfant :<br>
+    <strong>1.</strong> Mettre à jour le code IS dès le mois de naissance (ou suivant)<br>
+    <strong>2.</strong> Annoncer l'enfant à la caisse AF dans les 30 jours<br>
+    <strong>3.</strong> Vérifier si le salarié a droit au congé paternité (14 jours indemnisés via APG) et l'informer<br>
+    <strong>4.</strong> Conserver l'acte de naissance dans le dossier</p></div></div>
+
+    <div class="info-card" style="margin-top:1rem"><strong>Enfants résidant à l'étranger (cas frontaliers)</strong>Un frontalier français avec des enfants résidant en France peut quand même bénéficier des déductions IS en Suisse ET des allocations familiales suisses (principe du pays d'emploi selon règlement CE 883/2004). Mais la France peut aussi verser des AF — mécanisme de non-cumul à vérifier avec la CAF française.</div>
+  </div>
+
+  <!-- MONOPARENTAL -->
+  <div id="inner-sit-mono" class="inner-content">
+    <div class="section-title">Famille monoparentale — Code H (la plupart des cantons)</div>
+    <div class="info-card"><strong>Définition</strong>Parent célibataire, divorcé ou veuf qui élève seul son/ses enfant(s). Le code H (ou D selon les cantons) est plus favorable que le code A car il tient compte de la charge unique des enfants sans soutien conjugal.</div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Documents spécifiques à collecter</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Jugement de divorce ou acte de décès (si veuf/veuve)</div><div class="step-desc">Confirme le statut "monoparental" pour l'AFC</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Actes de naissance des enfants à charge</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Justificatif de garde exclusive ou résidence principale des enfants</div><div class="step-desc">Indispensable — l'AFC peut demander la preuve que les enfants vivent bien chez le salarié</div><span class="step-who who-sal">Salarié</span></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Annonce AF à la caisse</div><div class="step-desc">Le salarié monoparental bénéficie des AF en priorité — pas de partage avec un autre parent</div><span class="step-who who-rh">RH</span></div></div>
+      </div>
+    </div>
+
+    <div class="risk-box green"><div class="icon">✅</div><div><div class="risk-box-title">Avantage fiscal significatif</div><p>Le code H (monoparental) est généralement plus favorable que le code A car il intègre à la fois les déductions liées aux enfants et une déduction pour charges de famille uniques. L'économie peut représenter 3–6 points de taux IS selon le canton et le nombre d'enfants.</p></div></div>
+  </div>
+
+  <!-- CONCUBINAGE / PACS -->
+  <div id="inner-sit-pacs" class="inner-content">
+    <div class="section-title">Concubinage et partenariat non enregistré</div>
+    <div class="risk-box orange"><div class="icon">⚠️</div><div><div class="risk-box-title">Point souvent mal compris — Concubinage ≠ Mariage fiscalement</div><p>En droit suisse, le concubinage (couple non marié, non pacsé) n'est pas reconnu fiscalement pour l'IS. Un salarié en concubinage est traité comme <strong>célibataire (code A)</strong> même s'il vit avec un partenaire.</p></div></div>
+
+    <div class="phase">
+      <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Ce que ça change pour la paie</div></div>
+      <div class="phase-body">
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Concubin sans enfant → Code A</div><div class="step-desc">Taux IS maximal. Même s'il/elle vit avec un partenaire sans revenu. Pas de déduction "conjoint".</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Concubin avec enfant(s) communs reconnus → Code D ou H</div><div class="step-desc">Si le salarié a des enfants reconnus à sa charge, les déductions enfants s'appliquent même en concubinage.</div></div></div>
+        <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Partenariat enregistré (équivalent mariage en CH)</div><div class="step-desc">Depuis 2022 : le mariage civil est ouvert à tous en Suisse. Les partenariats enregistrés antérieurs → Code B ou C selon revenus du partenaire.</div></div></div>
+      </div>
+    </div>
+
+    <div class="info-card"><strong>Action RH recommandée</strong>À l'onboarding, ne pas supposer le code barème sur la base de la situation déclarée verbalement. Faire remplir la fiche IS complète et signée, qui engage la responsabilité du salarié sur les informations déclarées. En cas de fausse déclaration, c'est le salarié qui assume le différentiel IS à la régularisation.</div>
+  </div>
+
+  <!-- RÉCAPITULATIF -->
+  <div class="section-title" style="margin-top:2rem">Récapitulatif — Codes barèmes IS × situations</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Situation</th><th>Code IS</th><th>Taux relatif</th><th>AF ?</th><th>Documents spécifiques</th></tr></thead>
+      <tbody>
+        <tr><td>Célibataire, sans enfant</td><td><strong>A</strong></td><td class="danger">Le plus élevé</td><td class="n">Non</td><td>Fiche IS simple</td></tr>
+        <tr><td>Marié, conjoint sans revenu</td><td><strong>B</strong></td><td class="ok">Favorable</td><td class="n">Non</td><td>Acte mariage + décl. conjoint</td></tr>
+        <tr><td>Marié, double revenu</td><td><strong>C</strong></td><td class="cond">Intermédiaire</td><td class="n">Non</td><td>Acte mariage + info revenus conjoint</td></tr>
+        <tr><td>Célibataire / divorcé + enfant(s)</td><td><strong>D / H</strong></td><td class="cond">Réduit</td><td class="y">Oui</td><td>Acte naissance + garde</td></tr>
+        <tr><td>Marié + enfant(s), 1 revenu</td><td><strong>B+enf.</strong></td><td class="ok">Très favorable</td><td class="y">Oui</td><td>Acte mariage + actes naissance</td></tr>
+        <tr><td>Marié + enfant(s), 2 revenus</td><td><strong>C+enf.</strong></td><td class="cond">Modéré</td><td class="y">Oui</td><td>Acte mariage + actes naissance</td></tr>
+        <tr><td>Famille monoparentale</td><td><strong>H</strong></td><td class="ok">Favorable</td><td class="y">Oui</td><td>Jugement divorce/décès + garde</td></tr>
+        <tr><td>Concubin sans enfant</td><td><strong>A</strong></td><td class="danger">Le plus élevé</td><td class="n">Non</td><td>Fiche IS simple</td></tr>
+        <tr><td>Concubin avec enfant(s)</td><td><strong>D / H</strong></td><td class="cond">Réduit</td><td class="y">Oui</td><td>Actes naissance + reconnaissance</td></tr>
+        <tr><td>Partenariat enregistré, sans enfant</td><td><strong>B ou C</strong></td><td class="ok">Favorable</td><td class="n">Non</td><td>Acte partenariat + info revenus</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Impact financier concret — CHF 8 000 brut/mois, Genève, Permis B</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Situation familiale</th><th>Code IS</th><th>IS GE estimé/mois</th><th>Net estimé/mois</th><th>Différence vs célibataire</th></tr></thead>
+      <tbody>
+        <tr><td>Célibataire, 0 enfant</td><td><strong>A</strong></td><td>~CHF 1 360 (17%)</td><td>~CHF 5 776</td><td>Référence</td></tr>
+        <tr><td>Marié, conjoint sans revenu</td><td><strong>B</strong></td><td>~CHF 880 (11%)</td><td>~CHF 6 256</td><td class="ok">+CHF 480/mois</td></tr>
+        <tr><td>Marié, double revenu</td><td><strong>C</strong></td><td>~CHF 1 200 (15%)</td><td>~CHF 5 936</td><td class="cond">+CHF 160/mois</td></tr>
+        <tr><td>Marié B + 1 enfant</td><td><strong>B+1</strong></td><td>~CHF 760 (9,5%)</td><td>~CHF 6 687</td><td class="ok">+CHF 911/mois (avec AF)</td></tr>
+        <tr><td>Marié B + 2 enfants</td><td><strong>B+2</strong></td><td>~CHF 640 (8%)</td><td>~CHF 7 098</td><td class="ok">+CHF 1 322/mois (avec AF)</td></tr>
+        <tr><td>Monoparental + 1 enfant</td><td><strong>H+1</strong></td><td>~CHF 800 (10%)</td><td>~CHF 6 287</td><td class="ok">+CHF 511/mois (avec AF)</td></tr>
+        <tr><td>Concubin, 0 enfant</td><td><strong>A</strong></td><td>~CHF 1 360 (17%)</td><td>~CHF 5 776</td><td class="n">Identique célibataire</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small" style="margin-bottom:1rem">Déductions fixes incluses dans l'estimation : AVS/AI/APG (5,3%) + AC (1,1%) + AANP (1,3%) + LPP (7%). AF Genève : CHF 311/enfant (0–15 ans).</p>
+
+  <div class="section-title">Quand mettre à jour le code IS — Événements déclencheurs</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">🔄</div><div class="phase-title">Changements de situation → action RH obligatoire dans les 30 jours</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Mariage</div><div class="step-desc">Passage code A → B (si conjoint sans revenu) ou A → C (double revenu). Demander acte de mariage + info revenus conjoint. Mise à jour dès le mois suivant.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Naissance ou adoption</div><div class="step-desc">Ajout d'un enfant → réduction du taux IS + déclenchement droit AF. Acte de naissance requis. Annoncer aussi à la caisse AF dans les 30 jours.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Séparation / divorce</div><div class="step-desc">Passage code B ou C → A ou H (si garde enfants). Jugement ou attestation de séparation. Vérifier qui garde les enfants → impact code IS et AF.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Conjoint reprend un emploi</div><div class="step-desc">Passage code B → C. Le salarié doit notifier immédiatement. Sous-déclaration = régularisation IS à la charge du salarié lors du décompte annuel.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Déménagement (frontalier)</div><div class="step-desc">Si le frontalier déménage hors de la zone frontalière éligible → perte du statut de frontalier → changement de permis et de régime IS. Vérifier immédiatement.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Enfant cesse sa formation (16–25 ans)</div><div class="step-desc">Fin du droit à l'allocation de formation. Fin de la déduction enfant dans le code IS si plus à charge. Double impact : IS et AF.</div></div></div>
+    </div>
+  </div>
+
+  <div class="quick-check"><h3>⚡ Check RRH — Situations familiales</h3><ul><li>Fiche IS complète et signée dans le dossier de CHAQUE salarié soumis à IS</li><li>Code barème confirmé par la fiduciaire avant la 1ère paie</li><li>Tout changement de situation (mariage, naissance, séparation) → mise à jour IS dans les 30 jours</li></ul></div>
+</div>
+
+<!-- ══════════════ PAGE : ALLOCATIONS FAMILIALES ══════════════ -->
+<div id="page-af" class="page">
+  <div class="hero">
+    <div class="hero-label">Allocations familiales</div>
+    <h1>Guide complet des allocations familiales<br>en Suisse — par canton</h1>
+    <p>Qui y a droit, montants 2024, démarches employeur, règles frontaliers et situations particulières.</p>
+  </div>
+
+  <div class="section-title">Principes fondamentaux</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">📋</div><div class="phase-title">Base légale — Loi fédérale sur les allocations familiales (LAFam)</div><div class="phase-tag">En vigueur depuis 2009</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Qui a droit aux AF ?</div><div class="step-desc">Tout salarié soumis aux assurances sociales suisses (AVS) ayant des enfants à charge — peu importe sa nationalité ou son lieu de résidence (y compris frontaliers). Le droit est lié au <strong>pays d'emploi</strong> (Suisse), pas au lieu de résidence.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Enfants concernés</div><div class="step-desc">Enfants jusqu'à 16 ans (25 ans si en formation ou apprentissage). Enfants biologiques, adoptés, ou recueillis à charge. Enfants résidant à l'étranger également éligibles.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Qui verse les AF ?</div><div class="step-desc">L'employeur verse les AF avec le salaire. Il se fait rembourser par sa caisse AF (incluse dans la caisse AVS / FER). Le salarié ne doit rien demander à une caisse — c'est l'employeur qui gère.</div></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Taux d'occupation minimal</div><div class="step-desc">Pas de seuil minimum de taux d'occupation pour bénéficier des AF. Un salarié à 20% y a droit si les conditions sont remplies.</div></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Montants 2024 — Minimum fédéral et cantons Alpineo</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Type d'allocation</th><th>Minimum fédéral</th><th>Genève 🏙</th><th>Vaud 🌿</th><th>Zurich 🏦</th><th>Neuchâtel ⛰</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Allocation pour enfant (0–15 ans)</strong></td><td>CHF 215/mois</td><td class="ok"><strong>CHF 311</strong></td><td>CHF 215</td><td>CHF 215</td><td>CHF 215</td></tr>
+        <tr><td><strong>Allocation de formation (16–25 ans)</strong></td><td>CHF 268/mois</td><td class="ok"><strong>CHF 411</strong></td><td>CHF 268</td><td>CHF 268</td><td>CHF 268</td></tr>
+        <tr><td><strong>Allocation de naissance</strong></td><td>Non obligatoire</td><td class="ok">CHF 1 500</td><td class="n">Non</td><td class="n">Non</td><td class="n">Non</td></tr>
+        <tr><td><strong>Allocation d'adoption</strong></td><td>Non obligatoire</td><td class="ok">CHF 1 500</td><td class="n">Non</td><td class="n">Non</td><td class="n">Non</td></tr>
+        <tr><td><strong>Caisse AF principale</strong></td><td>—</td><td>CAF GE / FER GE</td><td>CVAF / FER SR</td><td>AK ZH</td><td>CCC NE</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-card"><strong>💡 Genève — Le canton le plus généreux</strong>Genève verse CHF 311/mois par enfant (vs CHF 215 ailleurs), soit CHF 96/mois de plus. Sur 12 mois et 2 enfants : CHF 2 304/an d'écart vs un salarié équivalent à Zurich ou Vaud. À valoriser dans les offres de recrutement côté Genève.</div>
+
+  <div class="section-title">Processus RH — Déclaration et versement</div>
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">À l'onboarding — Annonce des enfants</div><div class="phase-tag">RH • J à J+30</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Collecter les informations sur les enfants</div><div class="step-desc">Nombre d'enfants, prénoms, dates de naissance, situation (scolaire / en formation / apprentissage). Actes de naissance ou livret de famille.</div><span class="step-who who-sal">Salarié</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Formulaire d'annonce AF à la caisse</div><div class="step-desc">Chaque caisse AF a son formulaire (FER GE, CVAF, AK ZH…). L'employeur remplit et envoie. La caisse confirme le droit et le montant mensuel.</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Paramétrage dans la paie</div><div class="step-desc">La fiduciaire ajoute les AF comme ligne positive sur la fiche de paie (pas soumises à cotisations sociales ni à IS). Montant mensuel = nb enfants × montant cantonal.</div><span class="step-who who-fid">Fiduciaire</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Remboursement par la caisse AF à l'employeur</div><div class="step-desc">L'employeur avance les AF. La caisse AF rembourse via compensation avec les cotisations AVS versées (mécanisme de clearing mensuel ou trimestriel).</div><span class="step-who who-rh">RH / FID</span></div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Enfant atteignant 16 ans — Transition allocation formation</div><div class="phase-tag">RH • Annuel</div></div>
+    <div class="phase-body">
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">À 16 ans : passage automatique à l'allocation de formation</div><div class="step-desc">Si l'enfant est en formation (école, université, apprentissage) → montant passe de CHF 215 à CHF 268/mois (CHF 311 → 411 à GE). Si l'enfant ne fait plus d'études → droit aux AF s'arrête.</div><span class="step-who who-rh">RH</span></div></div>
+      <div class="step"><div class="step-dot"></div><div class="step-content"><div class="step-title">Justificatif de formation requis chaque année</div><div class="step-desc">Attestation d'inscription dans l'établissement. Sans ce justificatif, la caisse AF peut suspendre le versement.</div><span class="step-who who-sal">Salarié → RH → Caisse</span></div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Règles spécifiques — Frontaliers</div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Frontalier France — Double droit AF (CH + FR) ? <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2); margin-bottom:10px">Le frontalier français est soumis aux assurances sociales suisses → il a droit aux AF suisses pour ses enfants résidant en France. Mais la France peut également verser des AF (CAF française). <strong>Principe de non-cumul :</strong></p>
+        <ul style="font-size:13px; color:var(--ink2); padding-left:18px; line-height:2">
+          <li><strong>Pays d'emploi prioritaire (CH)</strong> : si le salaire suisse est le revenu principal, les AF suisses sont versées en priorité</li>
+          <li>La CAF française verse un <strong>complément différentiel</strong> uniquement si les AF françaises sont supérieures aux AF suisses</li>
+          <li>En pratique pour Genève : AF CH = CHF 311 ≈ EUR 315, souvent supérieur aux AF françaises — pas de complément CAF</li>
+          <li>Le salarié frontalier doit déclarer les AF perçues en Suisse à la CAF française</li>
+        </ul>
+        <div class="risk-box orange" style="margin-top:10px"><div class="icon">⚠️</div><div><div class="risk-box-title">Obligation de déclaration du salarié frontalier</div><p>Le salarié frontalier FR doit informer la CAF française qu'il perçoit des AF suisses. Le non-déclaration peut entraîner un indu (remboursement exigé). Ce n'est pas une obligation Alpineo — mais informer le salarié à l'onboarding.</p></div></div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Enfants résidant à l'étranger — Éligibilité <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2)">Les enfants résidant dans un pays avec accord de sécurité sociale avec la Suisse (UE/AELE, France, Allemagne, Italie…) donnent droit aux AF suisses. Les enfants résidant dans un pays sans accord peuvent aussi y avoir droit si le salarié est soumis à l'AVS suisse — à vérifier au cas par cas avec la caisse AF. En pratique, la grande majorité des pays représentés chez Alpineo ont des accords avec la Suisse.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Salarié à temps partiel — Droit aux AF <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2)">Les AF sont versées intégralement (pas au prorata) quelle que soit le taux d'occupation, à partir du moment où le salarié est affilié AVS. Un salarié à 20% percevra le même montant AF qu'un salarié à 100%, pour le même nombre d'enfants.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">Deux parents qui travaillent — Qui perçoit les AF ? <span class="acc-arrow">▶</span></div>
+      <div class="acc-body">
+        <p style="font-size:13px; color:var(--ink2); margin-bottom:8px">Si les deux parents travaillent, les AF ne sont versées qu'une seule fois. Ordre de priorité :</p>
+        <ol style="font-size:13px; color:var(--ink2); padding-left:18px; line-height:2">
+          <li>Le parent qui exerce une activité lucrative dans le canton de résidence de l'enfant</li>
+          <li>Si les deux parents exercent dans le même canton : le parent qui a le plus grand taux d'occupation</li>
+          <li>Si taux égaux : le parent avec le salaire le plus élevé</li>
+        </ol>
+        <p style="font-size:13px; color:var(--ink2); margin-top:8px">En pratique pour un frontalier : si le conjoint travaille aussi en Suisse dans le même canton, une seule caisse verse les AF. À coordonner entre les deux employeurs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Situations particulières</div>
+  <div class="matrix">
+    <table>
+      <thead><tr><th>Situation</th><th>Droit AF ?</th><th>Montant</th><th>Démarche spécifique</th></tr></thead>
+      <tbody>
+        <tr><td>Enfant en apprentissage (16–25 ans)</td><td class="y">Oui</td><td>CHF 268 (CHF 411 GE)</td><td>Attestation de contrat d'apprentissage annuelle</td></tr>
+        <tr><td>Enfant à l'université à l'étranger</td><td class="y">Oui</td><td>CHF 268 (CHF 411 GE)</td><td>Attestation inscription université + preuve charge financière</td></tr>
+        <tr><td>Enfant handicapé (plus de 16 ans)</td><td class="y">Oui</td><td>CHF 268+</td><td>Attestation invalidité / décision AI</td></tr>
+        <tr><td>Naissance pendant le contrat</td><td class="y">Oui dès naissance</td><td>CHF 215–311 selon canton</td><td>Annoncer dans les 30 jours — acte de naissance</td></tr>
+        <tr><td>Adoption</td><td class="y">Oui + allocation adoption</td><td>CHF 215–311 + CHF 1 500 (GE)</td><td>Décision d'adoption + annonce caisse</td></tr>
+        <tr><td>Garde alternée (50/50)</td><td class="cond">Un seul parent perçoit</td><td>Plein montant</td><td>Convention de garde ou accord entre parents</td></tr>
+        <tr><td>Enfant placé en famille d'accueil</td><td class="cond">Sous conditions</td><td>Variable</td><td>Décision autorité tutélaire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Obligations de déclaration des changements</div>
+  <ul class="checklist">
+    <li><strong>Naissance</strong> → Annoncer dans les 30 jours à la caisse AF + mettre à jour la paie</li>
+    <li><strong>Enfant qui arrête ses études</strong> → Signaler immédiatement, l'AF de formation s'arrête</li>
+    <li><strong>Enfant qui atteint 25 ans</strong> → Fin automatique du droit — surveiller les dates</li>
+    <li><strong>Déménagement de l'enfant</strong> (changement de pays) → Peut affecter le droit et le montant</li>
+    <li><strong>Séparation/divorce des parents</strong> → Changement possible de bénéficiaire des AF</li>
+    <li><strong>Conjoint reprend un travail</strong> (si également salarié en CH) → Coordination entre les deux caisses AF</li>
+  </ul>
+
+  <div class="risk-box red"><div class="icon">🚨</div><div><div class="risk-box-title">Risque contrôle caisse AF</div><p>Les caisses AF contrôlent régulièrement la justification des droits. Un enfant qui a arrêté ses études à 17 ans mais pour lequel les AF de formation continuent d'être versées → remboursement exigé + intérêts. <strong>Mettre en place un rappel annuel en janvier</strong> pour demander aux salariés concernés l'attestation de formation de leurs enfants de 16–25 ans.</p></div></div>
+
+  <div class="quick-check"><h3>⚡ Check RRH — Allocations familiales</h3><ul><li>Tout nouvel entrant avec enfants → formulaire AF caisse dans les 30 jours</li><li>Chaque janvier : demander attestations de formation pour les 16–25 ans</li><li>Informer les frontaliers FR de leur obligation de déclaration à la CAF</li></ul></div>
+</div>
+
+
+<script>
+function showPage(name, evt) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.case-card').forEach(c => c.classList.remove('selected'));
+}
+
+function showCase(id, evt) {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.case-card').forEach(c => c.classList.remove('selected'));
+  const panel = document.getElementById('detail-' + id);
+  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({behavior:'smooth',block:'start'}); }
+  const btn = document.getElementById('btn-' + id);
+  if (btn) btn.classList.add('selected');
+}
+
+function goToCase(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-cas').classList.add('active');
+  document.querySelectorAll('.nav-tab')[1].classList.add('active');
+  setTimeout(() => showCase(id), 80);
+}
+
+function toggleAcc(header) {
+  header.closest('.acc-item').classList.toggle('open');
+}
+
+function showInner(id, evt) {
+  const page = document.getElementById('inner-' + id).closest('.page');
+  page.querySelectorAll('.inner-content').forEach(c => c.classList.remove('active'));
+  page.querySelectorAll('.inner-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('inner-' + id).classList.add('active');
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
